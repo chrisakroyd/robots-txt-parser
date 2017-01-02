@@ -53,6 +53,12 @@ function Robots(opts) {
   };
 }
 
+Robots.prototype.parseRobots = function parseRobots(url, string) {
+  const formattedLink = util.formatLink(url);
+  this.robotsCache[formattedLink] = parser(string);
+  this.active = formattedLink;
+};
+
 Robots.prototype.isCached = function robotsExist(domain) {
   return util.formatLink(domain) in this.robotsCache;
 };
@@ -104,7 +110,7 @@ Robots.prototype.getSitemapsSync = function getSitemaps() {
 };
 
 Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
-  const botRecords = this.robotsCache[this.active];
+  const botRecords = this.getRecordsForAgent();
   return botRecords ? botRecords.crawlDelay : 0;
 };
 

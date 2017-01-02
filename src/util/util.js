@@ -12,12 +12,12 @@ function addProtocol(link) {
   return `http://${link}`;
 }
 
-function getHostname(link) {
-  return url.parse(link).hostname;
+function getProtocol(link) {
+  return url.parse(link).protocol || '';
 }
 
-function getProtocol(link) {
-  return url.parse(link).protocol;
+function getHostname(link) {
+  return url.parse(link).hostname;
 }
 
 function formatLink(rawLink) {

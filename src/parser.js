@@ -47,7 +47,6 @@ function parseRobots(rawString) {
   const lines = splitOnLines(cleanString(rawString));
   const robotsObj = {
     sitemaps: [],
-    crawlDelay: 0,
   };
   let agent = '';
   lines.forEach((line) => {
@@ -56,30 +55,43 @@ function parseRobots(rawString) {
       case USER_AGENT:
         // Bot names are non-case sensitive.
         agent = record.value = record.value.toLowerCase();
-        robotsObj[agent] = {
-          allow: [],
-          disallow: [],
-        };
+        if (agent.length > 0) {
+          robotsObj[agent] = {
+            allow: [],
+            disallow: [],
+            crawlDelay: 0,
+          };
+        }
         break;
       // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
       case ALLOW:
-        robotsObj[agent].allow.push(groupMemberRecord(record.value));
+        if (agent.length > 0 && record.value.length > 0) {
+          robotsObj[agent].allow.push(groupMemberRecord(record.value));
+        }
         break;
       case DISALLOW:
-        robotsObj[agent].disallow.push(groupMemberRecord(record.value));
+        if (agent.length > 0 && record.value.length > 0) {
+          robotsObj[agent].disallow.push(groupMemberRecord(record.value));
+        }
         break;
       // Non standard but support by google therefore included.
       case SITEMAP:
-        robotsObj.sitemaps.push(record.value);
+        if (record.value.length > 0) {
+          robotsObj.sitemaps.push(record.value);
+        }
         break;
       // @TODO test crawl delay parameter.
       case CRAWL_DELAY:
-        robotsObj.crawlDelay = Number.parseInt(record.value, 10);
+        if (agent.length > 0) {
+          robotsObj[agent].crawlDelay = Number.parseInt(record.value, 10);
+        }
         break;
       default:
         break;
     }
   });
+  // Return only unique sitemaps.
+  robotsObj.sitemaps = robotsObj.sitemaps.filter((val, i, s) => s.indexOf(val) === i);
   return robotsObj;
 }
 
