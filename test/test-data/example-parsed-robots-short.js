@@ -5,10 +5,10 @@ module.exports = {
   longbot: {
     allow: [{ specificity: 7, path: /^\/cheese$/ }, { specificity: 6, path: /^\/swiss$/ },
       { specificity: 12, path: /^\/swissywissy$/ }],
-    disallow: [{ specificity: 6, path: /^\/swiss$/ }],
+    disallow: [{ specificity: 6, path: /^\/swissy$/ }],
     crawlDelay: 3,
   },
-  morebot: { allow: [{ specificity: 5, path: /^\/test$/ },  {specificity: 8, path: /^\/special$/ }],
+  morebot: { allow: [{ specificity: 5, path: /^\/test$/ }, {specificity: 8, path: /^\/special$/ }],
     disallow: [{ specificity: 7, path: /^\/search$/ }, { specificity: 5, path: /^\/news$/ }],
     crawlDelay: 89,
   },

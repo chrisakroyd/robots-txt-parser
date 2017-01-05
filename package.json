@@ -8,6 +8,9 @@
   },
   "scripts": {
     "test": "mocha test/index.js",
+    "test-robots": "mocha test/robots/index-tests.js",
+    "test-parser": "mocha test/parser/parser-tests.js",
+    "test-util": "mocha test/util/util-tests.js",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/index.js"
   },
   "repository": {

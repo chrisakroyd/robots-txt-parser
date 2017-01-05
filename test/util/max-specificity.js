@@ -5,10 +5,6 @@ const parsedRobots = require('../test-data/example-parsed-robots-short.js');
 
 const expect = chai.expect;
 
-function maxSpecificityTest() {
-}
-
-
 describe('max-specificity', () => {
   const userAgents = Object.keys(parsedRobots).filter(val => val !== 'sitemaps');
 

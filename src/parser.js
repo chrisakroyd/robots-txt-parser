@@ -43,7 +43,7 @@ function groupMemberRecord(value) {
 }
 
 
-function parseRobots(rawString) {
+function parser(rawString) {
   const lines = splitOnLines(cleanString(rawString));
   const robotsObj = {
     sitemaps: [],
@@ -95,4 +95,4 @@ function parseRobots(rawString) {
   return robotsObj;
 }
 
-module.exports = parseRobots;
+module.exports = parser;
