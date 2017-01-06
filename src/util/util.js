@@ -21,16 +21,17 @@ function getHostname(link) {
 }
 
 function formatLink(rawLink) {
-  let link = getHostname(rawLink);
-  // No protocol or the protocol the link has is non-http.
-  if (!hasProtocol(rawLink) || !hasHttpProtocol(rawLink)) {
+  let link = rawLink;
+  // No protocol on the link, this can screw up url parsing with node url so add a protocol.
+  if (!hasProtocol(rawLink)) {
     link = addProtocol(link);
-  } else {
-    // Stick the protocol on the link, will be either http:// or https://
-    link = `${getProtocol(rawLink)}//${link}`;
   }
-  // Append the file we're interested in.
-  return link;
+  // The protocol the link has is non-http, fix that and stick the hostname back on.
+  if (!hasHttpProtocol(link)) {
+    link = addProtocol(getHostname(link));
+  }
+  // Return the base link.
+  return `${getProtocol(link)}//${getHostname(link)}`;
 }
 
 function applyRecords(path, records) {
