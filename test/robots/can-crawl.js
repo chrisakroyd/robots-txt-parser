@@ -13,11 +13,19 @@ function getUserAgents(parsedRobots) {
 describe('can-crawl ', () => {
   testData.forEach((data, i) => {
     const userAgents = getUserAgents(parser(data.robots));
-    robotsParser.parseRobots(`test${i}.com`, data.robots);
+    robotsParser.setAllowOnNeutral(false);
+
+    before(() => {
+      robotsParser.parseRobots(`test${i}.com`, data.robots);
+    });
 
     userAgents.forEach((agent) => {
-      robotsParser.setUserAgent(agent);
       describe(`Running crawl tests for ${agent}.`, () => {
+        before(() => {
+          robotsParser.setUserAgent(agent);
+          robotsParser.useRobotsFor(`test${i}.com`);
+        });
+
         data.matches.forEach((shouldMatch) => {
           it(`Expect ${shouldMatch} to be crawlable.`, () => {
             expect(robotsParser.canCrawlSync(shouldMatch)).to.be.true;

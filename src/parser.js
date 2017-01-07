@@ -29,16 +29,30 @@ function parseRecord(line) {
   const firstColonI = line.indexOf(':');
   return {
     // Fields are non-case sensitive, therefore lowercase them.
-    field: line.slice(0, firstColonI).toLowerCase(),
+    field: line.slice(0, firstColonI).toLowerCase().trim(),
     // Values are case sensitive (e.g. urls) and therefore leave alone.
     value: line.slice(firstColonI + 1).trim(),
   };
 }
 
+function parsePattern(pattern) {
+  const regexSpecialChars = /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g;
+  const wildCardPattern = /\*/g;
+  const EOLPattern = /\\\$$/;
+  const flags = 'm';
+
+  const regexString = pattern
+    .replace(regexSpecialChars, '\\$&')
+    .replace(wildCardPattern, '.*')
+    .replace(EOLPattern, '$');
+
+  return new RegExp(regexString, flags);
+}
+
 function groupMemberRecord(value) {
   return {
     specificity: value.length,
-    path: globToRegExp(value),
+    path: parsePattern(value),
   };
 }
 

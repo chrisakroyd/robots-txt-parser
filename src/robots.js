@@ -24,17 +24,6 @@ function Robots(opts) {
     return false;
   };
 
-  this.allowed = (url) => {
-    // Get the parsed robotsCache.txt for this domain.
-    const botGroup = this.getRecordsForAgent();
-    // Conditional allow, our bot or the * user agent is in the robotsCache.txt
-    if (botGroup) {
-      return this.canVisit(url, botGroup);
-    }
-    // Robots txt exists doesn't have any rules for our bot or *, therefore full allow.
-    return true;
-  };
-
   this.canVisit = (url, botGroup) => {
     const allow = util.applyRecords(url, botGroup.allow);
     const disallow = util.applyRecords(url, botGroup.disallow);
@@ -42,11 +31,11 @@ function Robots(opts) {
     const maxSpecificityDisallow = util.maxSpecificity(disallow);
     const noAllows = allow.length === 0 && disallow.length > 0;
     const noDisallows = allow.length > 0 && disallow.length === 0;
-
-    if (noAllows || (maxSpecificityAllow < maxSpecificityDisallow)) {
-      return false;
-    } else if (noDisallows || (maxSpecificityAllow > maxSpecificityDisallow)) {
+    
+    if (noDisallows || (maxSpecificityAllow > maxSpecificityDisallow)) {
       return true;
+    } else if (noAllows || (maxSpecificityAllow < maxSpecificityDisallow)) {
+      return false;
     }
     return this.opts.allowOnNeutral;
   };
@@ -76,9 +65,9 @@ Robots.prototype.fetch = function addRobots(link) {
 Robots.prototype.canCrawl = function allowed(url) {
   if (!this.isCached(url)) {
     return this.fetch(url)
-      .then(() => this.allowed(url));
+      .then(() => this.canCrawlSync(url));
   }
-  return Promise.resolve(this.allowed(url));
+  return Promise.resolve(this.canCrawlSync(url));
 };
 
 Robots.prototype.useRobotsFor = function useRobots(url) {
@@ -100,7 +89,14 @@ Robots.prototype.getCrawlDelay = function getCrawlDelay() {
 };
 
 Robots.prototype.canCrawlSync = function canFetch(url) {
-  return this.allowed(url);
+  // Get the parsed robotsCache.txt for this domain.
+  const botGroup = this.getRecordsForAgent();
+  // Conditional allow, our bot or the * user agent is in the robotsCache.txt
+  if (botGroup) {
+    return this.canVisit(url, botGroup);
+  }
+  // Robots txt exists doesn't have any rules for our bot or *, therefore full allow.
+  return true;
 };
 
 Robots.prototype.getSitemapsSync = function getSitemaps() {

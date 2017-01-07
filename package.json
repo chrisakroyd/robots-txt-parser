@@ -10,8 +10,7 @@
     "test": "mocha test/index.js",
     "test-robots": "mocha test/robots/index-tests.js",
     "test-parser": "mocha test/parser/parser-tests.js",
-    "test-util": "mocha test/util/util-tests.js",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/index.js"
+    "test-util": "mocha test/util/util-tests.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +33,6 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "^6.8.0",
-    "istanbul": "^0.4.5",
     "lodash": "^4.17.2",
     "mocha": "^3.2.0"
   },
