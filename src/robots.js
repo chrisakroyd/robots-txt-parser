@@ -7,12 +7,12 @@ const DFLT_OPTS = {
   allowOnNeutral: true,
 };
 
-function Robots(opts) {
+function Robots(opts = {}) {
   this.robotsCache = {};
-  this.opts = Object.assign(DFLT_OPTS, {
-    userAgent: opts.userAgent.toLowerCase(),
-    allowOnNeutral: opts.allowOnNeutral,
-  });
+  this.opts = {
+    userAgent: opts.userAgent ? opts.userAgent.toLowerCase() : DFLT_OPTS.userAgent,
+    allowOnNeutral: opts.allowOnNeutral ? opts.allowOnNeutral : DFLT_OPTS.allowOnNeutral,
+  };
 
   this.getRecordsForAgent = () => {
     const key = this.active;
@@ -34,6 +34,12 @@ function Robots(opts) {
     const maxSpecificityDisallow = util.maxSpecificity(disallow);
     const noAllows = allow.length === 0 && disallow.length > 0;
     const noDisallows = allow.length > 0 && disallow.length === 0;
+
+    // No rules for allow or disallow apply, therefore full allow.
+    if (noAllows && noDisallows) {
+      return true;
+    }
+
     if (noDisallows || (maxSpecificityAllow > maxSpecificityDisallow)) {
       return true;
     } else if (noAllows || (maxSpecificityAllow < maxSpecificityDisallow)) {
