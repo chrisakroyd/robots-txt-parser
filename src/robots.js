@@ -9,7 +9,10 @@ const DFLT_OPTS = {
 
 function Robots(opts) {
   this.robotsCache = {};
-  this.opts = Object.assign(DFLT_OPTS, opts);
+  this.opts = Object.assign(DFLT_OPTS, {
+    userAgent: opts.userAgent.toLowerCase(),
+    allowOnNeutral: opts.allowOnNeutral,
+  });
 
   this.getRecordsForAgent = () => {
     const key = this.active;
@@ -31,7 +34,6 @@ function Robots(opts) {
     const maxSpecificityDisallow = util.maxSpecificity(disallow);
     const noAllows = allow.length === 0 && disallow.length > 0;
     const noDisallows = allow.length > 0 && disallow.length === 0;
-    
     if (noDisallows || (maxSpecificityAllow > maxSpecificityDisallow)) {
       return true;
     } else if (noAllows || (maxSpecificityAllow < maxSpecificityDisallow)) {
@@ -110,7 +112,7 @@ Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
 };
 
 Robots.prototype.setUserAgent = function setUserAgent(agent) {
-  this.opts.userAgent = agent;
+  this.opts.userAgent = agent.toLowerCase();
 };
 
 Robots.prototype.setAllowOnNeutral = function setAllowOnNeutral(allow) {
