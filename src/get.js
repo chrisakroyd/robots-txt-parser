@@ -1,10 +1,10 @@
-const request = require('request');
+const get = require('simple-get');
 
-function get(getUrl) {
+function getRobots(getUrl) {
   return new Promise((resolve, reject) => {
-    request.get(getUrl, (error, response, body) => {
+    get.concat(getUrl, (error, response, body) => {
       if (!error) {
-        resolve(body);
+        resolve(body.toString());
       } else {
         reject(error);
       }
@@ -12,4 +12,4 @@ function get(getUrl) {
   });
 }
 
-module.exports = get;
+module.exports = getRobots;

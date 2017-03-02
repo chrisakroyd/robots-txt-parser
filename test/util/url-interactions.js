@@ -17,11 +17,6 @@ const expect = chai.expect;
 
 describe('url-interaction', () => {
   describe('has-protocol', () => {
-    it('Expect links to have a protocol.', () => {
-      hasProtocol.forEach((link) => {
-        expect(util.hasProtocol(link)).to.be.true;
-      });
-    });
 
     it('Expect links to not have a protocol.', () => {
       noProtocol.forEach((link) => {
@@ -60,7 +55,7 @@ describe('url-interaction', () => {
     });
   });
 
-  describe('get-protocol', () => {
+  describe('getRoboys-protocol', () => {
     it('Expect to successfully retrieve all protocols.', () => {
       hasProtocol.forEach((link) => {
         expect(util.getProtocol(link).length).to.be.above(0);
@@ -74,7 +69,7 @@ describe('url-interaction', () => {
     });
   });
 
-  describe('get-hostname', () => {
+  describe('getRoboys-hostname', () => {
     it('Should retrieve a hostname for each link.', () => {
       hasProtocol.forEach((link) => {
         expect(util.getHostname(link).length).to.be.above(0);

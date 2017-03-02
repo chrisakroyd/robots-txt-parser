@@ -1,11 +1,7 @@
-const url = require('url');
-
-function hasProtocol(link) {
-  return !!url.parse(link).protocol;
-}
+const url = require('fast-url-parser');
 
 function hasHttpProtocol(link) {
-  return link.indexOf('http') > -1 || link.indexOf('https') > -1;
+  return link.indexOf('http:') > -1 || link.indexOf('https:') > -1;
 }
 
 function addProtocol(link) {
@@ -21,14 +17,15 @@ function getHostname(link) {
 }
 
 function formatLink(rawLink) {
+  const parsedLink = url.parse(rawLink);
   let link = rawLink;
   // No protocol on the link, this can screw up url parsing with node url so add a protocol.
-  if (!hasProtocol(rawLink)) {
+  if (!parsedLink.protocol) {
     link = addProtocol(link);
   }
   // The protocol the link has is non-http, fix that and stick the hostname back on.
   if (!hasHttpProtocol(link)) {
-    link = addProtocol(getHostname(link));
+    link = addProtocol(parsedLink.hostname);
   }
   // Return the base link.
   return `${getProtocol(link)}//${getHostname(link)}`;
@@ -55,7 +52,6 @@ module.exports = {
   addProtocol,
   getHostname,
   getProtocol,
-  hasProtocol,
   formatLink,
   applyRecords,
   maxSpecificity,

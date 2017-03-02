@@ -1,4 +1,3 @@
-const globToRegExp = require('glob-to-regexp');
 // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
 // Constants for groupings
 const USER_AGENT = 'user-agent';
