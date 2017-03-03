@@ -1,5 +1,6 @@
 const chai = require('chai');
 const util = require('../../src/util/util.js');
+const url = require('fast-url-parser');
 
 const noProtocol = ['bbc.co.uk', 'google.com/robots.txt', 'chaijs.com/api/bdd/', 'www.reddit.com/r/news',
   'example.com/example/example.html'];
@@ -20,7 +21,8 @@ describe('url-interaction', () => {
 
     it('Expect links to not have a protocol.', () => {
       noProtocol.forEach((link) => {
-        expect(util.hasHttpProtocol(link)).to.be.false;
+        const protocol = url.parse(link).protocol;
+        expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
     });
   });
@@ -28,20 +30,24 @@ describe('url-interaction', () => {
   describe('has-http-protocol', () => {
     it('Expect all links to have a http protocol.', () => {
       hasHttpsProtocol.forEach((link) => {
-        expect(util.hasHttpProtocol(link)).to.be.true;
+        const protocol = url.parse(link).protocol;
+        expect(util.hasHttpProtocol(protocol)).to.be.true;
       });
 
       hasHttpsProtocol.forEach((link) => {
-        expect(util.hasHttpProtocol(link)).to.be.true;
+        const protocol = url.parse(link).protocol;
+        expect(util.hasHttpProtocol(protocol)).to.be.true;
       });
     });
 
     it('Expect all links to not have http protocol.', () => {
       hasNonHttpProtocol.forEach((link) => {
-        expect(util.hasHttpProtocol(link)).to.be.false;
+        const protocol = url.parse(link).protocol;
+        expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
       noProtocol.forEach((link) => {
-        expect(util.hasHttpProtocol(link)).to.be.false;
+        const protocol = url.parse(link).protocol;
+        expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
     });
   });
@@ -51,28 +57,6 @@ describe('url-interaction', () => {
       noProtocol.forEach((link) => {
         const linkWithProtocol = util.addProtocol(link);
         expect(linkWithProtocol).to.equal(`http://${link}`);
-      });
-    });
-  });
-
-  describe('getRoboys-protocol', () => {
-    it('Expect to successfully retrieve all protocols.', () => {
-      hasProtocol.forEach((link) => {
-        expect(util.getProtocol(link).length).to.be.above(0);
-      });
-    });
-
-    it('Expect to not be able to retrieve a protocol.', () => {
-      noProtocol.forEach((link) => {
-        expect(util.getProtocol(link).length).to.equal(0);
-      });
-    });
-  });
-
-  describe('getRoboys-hostname', () => {
-    it('Should retrieve a hostname for each link.', () => {
-      hasProtocol.forEach((link) => {
-        expect(util.getHostname(link).length).to.be.above(0);
       });
     });
   });

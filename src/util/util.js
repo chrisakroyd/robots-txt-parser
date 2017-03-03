@@ -1,34 +1,28 @@
 const url = require('fast-url-parser');
 
-function hasHttpProtocol(link) {
-  return link.indexOf('http:') > -1 || link.indexOf('https:') > -1;
+function hasHttpProtocol(protocol) {
+  return (protocol === 'http:' || protocol === 'https:');
 }
 
 function addProtocol(link) {
   return `http://${link}`;
 }
 
-function getProtocol(link) {
-  return url.parse(link).protocol || '';
-}
-
-function getHostname(link) {
-  return url.parse(link).hostname;
-}
-
 function formatLink(rawLink) {
-  const parsedLink = url.parse(rawLink);
+  let parsedLink = url.parse(rawLink);
   let link = rawLink;
-  // No protocol on the link, this can screw up url parsing with node url so add a protocol.
+  // No protocol on the link, this can screw up url parsing with node url
+  // so add a protocol and re-parse.
   if (!parsedLink.protocol) {
     link = addProtocol(link);
+    parsedLink = url.parse(link);
   }
-  // The protocol the link has is non-http, fix that and stick the hostname back on.
-  if (!hasHttpProtocol(link)) {
-    link = addProtocol(parsedLink.hostname);
+  // The protocol the link has is non-http, therefore we give it a http based protocol.
+  if (!hasHttpProtocol(parsedLink.protocol)) {
+    parsedLink.protocol = 'http:';
   }
   // Return the base link.
-  return `${getProtocol(link)}//${getHostname(link)}`;
+  return `${parsedLink.protocol}//${parsedLink.hostname}`;
 }
 
 function applyRecords(path, records) {
@@ -50,8 +44,6 @@ function maxSpecificity(records) {
 module.exports = {
   hasHttpProtocol,
   addProtocol,
-  getHostname,
-  getProtocol,
   formatLink,
   applyRecords,
   maxSpecificity,
