@@ -71,11 +71,10 @@ Robots.prototype.fetch = function addRobots(link) {
 
 // @TODO rework to be cleaner
 Robots.prototype.canCrawl = function allowed(url) {
-  if (!this.isCached(url)) {
-    return this.fetch(url)
-      .then(() => this.canCrawlSync(url));
+  if (this.isCached(url)) {
+    return Promise.resolve(this.canCrawlSync(url));
   }
-  return Promise.resolve(this.canCrawlSync(url));
+  return this.fetch(url).then(() => this.canCrawlSync(url));
 };
 
 Robots.prototype.useRobotsFor = function useRobots(url) {
@@ -105,6 +104,30 @@ Robots.prototype.canCrawlSync = function canFetch(url) {
   }
   // Robots txt exists doesn't have any rules for our bot or *, therefore full allow.
   return true;
+};
+
+
+/*
+ * Takes an array of links and returns an array of links which are crawlable
+ * for the given domain.
+ */
+Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray) {
+  const links = linkArray instanceof Array ? linkArray : [linkArray];
+  const crawlableLinks = [];
+  const botGroup = this.getRecordsForAgent();
+  if (botGroup) {
+    for(let i = 0; i < links.length; i +=1) {
+      const link = links[i];
+      if(this.canVisit(link, botGroup)) {
+        crawlableLinks.push(link);
+      }
+    }
+  }
+  return crawlableLinks;
+};
+
+Robots.prototype.getCrawlableLinksP = function getCrawlableLinksP(linkArray) {
+  return Promise.resolve(this.getCrawlableLinks(linkArray));
 };
 
 Robots.prototype.getSitemapsSync = function getSitemaps() {
