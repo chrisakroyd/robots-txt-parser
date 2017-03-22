@@ -24,6 +24,7 @@
   "homepage": "https://github.com/ChristopherAkroyd/robots-txt-parser#readme",
   "dependencies": {
     "fast-url-parser": "^1.1.3",
+    "is-absolute-url": "^2.1.0",
     "simple-get": "^2.4.0"
   },
   "devDependencies": {

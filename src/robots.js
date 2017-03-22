@@ -117,9 +117,8 @@ Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray) {
   const botGroup = this.getRecordsForAgent();
   if (botGroup) {
     for(let i = 0; i < links.length; i +=1) {
-      const link = links[i];
-      if(this.canVisit(link, botGroup)) {
-        crawlableLinks.push(link);
+      if(this.canVisit(links[i], botGroup)) {
+        crawlableLinks.push(links[i]);
       }
     }
   }

@@ -1,4 +1,5 @@
 const url = require('fast-url-parser');
+const isAbsolute = require('is-absolute-url');
 
 function hasHttpProtocol(protocol) {
   return (protocol === 'http:' || protocol === 'https:');
@@ -9,14 +10,14 @@ function addProtocol(link) {
 }
 
 function formatLink(rawLink) {
-  let parsedLink = url.parse(rawLink);
   let link = rawLink;
   // No protocol on the link, this can screw up url parsing with node url
-  // so add a protocol and re-parse.
-  if (!parsedLink.protocol) {
+  // so add a protocol and then parse.
+  if (!isAbsolute(link)) {
     link = addProtocol(link);
-    parsedLink = url.parse(link);
   }
+  const parsedLink = url.parse(link);
+
   // The protocol the link has is non-http, therefore we give it a http based protocol.
   if (!hasHttpProtocol(parsedLink.protocol)) {
     parsedLink.protocol = 'http:';
