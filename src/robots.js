@@ -30,19 +30,17 @@ function Robots(opts = {}) {
   this.canVisit = (url, botGroup) => {
     const allow = util.applyRecords(url, botGroup.allow);
     const disallow = util.applyRecords(url, botGroup.disallow);
-    const maxSpecificityAllow = util.maxSpecificity(allow);
-    const maxSpecificityDisallow = util.maxSpecificity(disallow);
-    const noAllows = allow.length === 0 && disallow.length > 0;
-    const noDisallows = allow.length > 0 && disallow.length === 0;
+    const noAllows = allow.numApply === 0 && disallow.numApply > 0;
+    const noDisallows = allow.numApply > 0 && disallow.numApply === 0;
 
     // No rules for allow or disallow apply, therefore full allow.
     if (noAllows && noDisallows) {
       return true;
     }
 
-    if (noDisallows || (maxSpecificityAllow > maxSpecificityDisallow)) {
+    if (noDisallows || (allow.maxSpecificity > disallow.maxSpecificity)) {
       return true;
-    } else if (noAllows || (maxSpecificityAllow < maxSpecificityDisallow)) {
+    } else if (noAllows || (allow.maxSpecificity < disallow.maxSpecificity)) {
       return false;
     }
     return this.opts.allowOnNeutral;

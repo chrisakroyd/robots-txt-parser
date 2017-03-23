@@ -11,12 +11,11 @@ const whitespace = ' ';
 const lineEndings = /[\r\n]+/g;
 
 function cleanString(rawString) {
-  let lines = rawString;
   // Replace comments and whitespace
-  lines = lines.replace(comments, '');
-  lines = lines.replace(whitespace, '');
-  lines = lines.trim();
-  return lines;
+  return rawString
+    .replace(comments, '')
+    .replace(whitespace, '')
+    .trim();
 }
 
 function splitOnLines(string) {

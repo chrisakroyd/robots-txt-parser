@@ -26,20 +26,27 @@ function formatLink(rawLink) {
   return `${parsedLink.protocol}//${parsedLink.hostname}`;
 }
 
+/*
+ * Calculates the number of records that apply for the
+ * given path and the maximum specificity of all
+ * the records which apply.
+ */
 function applyRecords(path, records) {
-  const recordTests = records.map(record => (
-    {
-      applies: record.path.test(path),
-      specificity: record.specificity,
+  let numApply = 0;
+  let maxSpecificity = 0;
+  records.forEach((record) => {
+    if (record.path.test(path)) {
+      numApply += 1;
+      if (record.specificity > maxSpecificity) {
+        maxSpecificity = record.specificity;
+      }
     }
-  ));
-  // Return only the records which apply to this path.
-  return recordTests.filter((record => record.applies));
-}
+  });
 
-function maxSpecificity(records) {
-  const specificity = records.map(record => record.specificity);
-  return Math.max(...specificity);
+  return {
+    numApply,
+    maxSpecificity
+  }
 }
 
 module.exports = {
@@ -47,5 +54,4 @@ module.exports = {
   addProtocol,
   formatLink,
   applyRecords,
-  maxSpecificity,
 };
