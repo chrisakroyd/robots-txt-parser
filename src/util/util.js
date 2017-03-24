@@ -36,7 +36,7 @@ function applyRecords(path, records) {
   let maxSpecificity = 0;
   records.forEach((record) => {
     if (record.path.test(path)) {
-      numApply += 1;
+      numApply = numApply + 1;
       if (record.specificity > maxSpecificity) {
         maxSpecificity = record.specificity;
       }
