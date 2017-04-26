@@ -1,5 +1,5 @@
 const chai = require('chai');
-const util = require('../../src/util/util.js');
+const util = require('../../src/util.js');
 const url = require('fast-url-parser');
 
 const noProtocol = ['bbc.co.uk', 'google.com/robots.txt', 'chaijs.com/api/bdd/', 'www.reddit.com/r/news',

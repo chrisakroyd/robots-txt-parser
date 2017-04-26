@@ -1,6 +1,6 @@
 {
   "name": "robots-txt-parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "src/index.js",
   "directories": {
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/ChristopherAkroyd/robots-txt-parser.git"
   },
-  "author": "",
+  "author": "Chris Akroyd",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ChristopherAkroyd/robots-txt-parser/issues"
@@ -29,24 +29,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "2.2.3",
-    "eslint-plugin-react": "^6.8.0",
     "lodash": "^4.17.2",
     "mocha": "^3.2.0"
-  },
-  "eslintConfig": {
-    "extends": "airbnb",
-    "rules": {
-      "no-console": "off",
-      "linebreak-style": "off",
-      "class-methods-use-this": "off"
-    },
-    "env": {
-      "browser": true,
-      "node": true
-    }
   }
 }

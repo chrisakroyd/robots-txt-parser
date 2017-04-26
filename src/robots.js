@@ -1,6 +1,6 @@
 const get = require('./get.js');
 const parser = require('./parser.js');
-const util = require('./util/util.js');
+const util = require('./util.js');
 
 const DFLT_OPTS = {
   userAgent: '*',
