@@ -5,6 +5,7 @@ const ALLOW = 'allow';
 const DISALLOW = 'disallow';
 const SITEMAP = 'sitemap';
 const CRAWL_DELAY = 'crawl-delay';
+const HOST = 'host';
 // Regex's for cleaning up the file.
 const comments = /#.*$/gm;
 const whitespace = ' ';
@@ -96,6 +97,12 @@ function parser(rawString) {
       case CRAWL_DELAY:
         if (agent.length > 0) {
           robotsObj[agent].crawlDelay = Number.parseInt(record.value, 10);
+        }
+        break;
+      // Non standard but included for completeness.
+      case HOST:
+        if (!('host' in robotsObj)) {
+          robotsObj.host = record.value;
         }
         break;
       default:

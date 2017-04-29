@@ -7,10 +7,10 @@ const expect = chai.expect;
 const robotsParser = robots();
 
 function getUserAgents(parsedRobots) {
-  return Object.keys(parsedRobots).filter(val => val !== 'sitemaps');
+  return Object.keys(parsedRobots).filter(val => val !== 'sitemaps' && val !== 'host');
 }
 
-describe('can-crawl ', () => {
+describe('can-crawl-sync ', () => {
   testData.forEach((data, i) => {
     const userAgents = getUserAgents(parser(data.robots));
     robotsParser.setAllowOnNeutral(false);
@@ -39,5 +39,11 @@ describe('can-crawl ', () => {
         });
       });
     });
+  });
+});
+
+describe('can-crawl-async', () => {
+  it ('Should return a promise.', () => {
+    expect(robotsParser.canCrawl('test.com')).to.be.an.instanceOf(Promise);
   });
 });

@@ -10,7 +10,8 @@
     "test": "mocha test/index.js",
     "test-robots": "mocha test/robots/index-tests.js",
     "test-parser": "mocha test/parser/parser-tests.js",
-    "test-util": "mocha test/util/util-tests.js"
+    "test-util": "mocha test/util/util-tests.js",
+    "coverage": "nyc mocha test/index.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
     "lodash": "^4.17.2",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "nyc": "^10.3.0"
   }
 }

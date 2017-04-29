@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 describe('can-parse-user-agents', () => {
   const parseResult = parse(exampleRobotsMalformed);
-  const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps');
+  const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps' && val !== 'host');
 
   it('Should have 3 sitemaps.', () => {
     expect(parseResult.sitemaps).to.have.lengthOf(3);

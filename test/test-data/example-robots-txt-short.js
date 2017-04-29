@@ -29,4 +29,5 @@ Crawl-delay: 64
 Sitemap: http://www.bbc.co.uk/mobile_sitemap.xml
 
 Sitemap: http://www.bbc.co.uk/test.xml
+host: http://www.bbc.co.uk
 `;

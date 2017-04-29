@@ -53,10 +53,6 @@ Robots.prototype.parseRobots = function parseRobots(url, string) {
   this.active = formattedLink;
 };
 
-Robots.prototype.isCached = function robotsExist(domain) {
-  return util.formatLink(domain) in this.robotsCache;
-};
-
 Robots.prototype.fetch = function addRobots(link) {
   const formattedLink = util.formatLink(link);
   const robotsLink = `${formattedLink}/robots.txt`;
@@ -67,30 +63,37 @@ Robots.prototype.fetch = function addRobots(link) {
     });
 };
 
-// @TODO rework to be cleaner
-Robots.prototype.canCrawl = function allowed(url) {
-  if (this.isCached(url)) {
-    return Promise.resolve(this.canCrawlSync(url));
-  }
-  return this.fetch(url).then(() => this.canCrawlSync(url));
+Robots.prototype.isCached = function robotsExist(domain) {
+  return util.formatLink(domain) in this.robotsCache;
 };
 
-Robots.prototype.useRobotsFor = function useRobots(url) {
+Robots.prototype.useRobotsFor = function useRobots(url, callback) {
   const link = util.formatLink(url);
-  if (link in this.robotsCache) {
+  const isCached = this.isCached(link);
+  if (isCached) {
     this.active = link;
-    return Promise.resolve();
+    if (callback) {
+      callback();
+    } else {
+      return Promise.resolve();
+    }
   }
+
   return this.fetch(url);
 };
 
-Robots.prototype.getSitemaps = function getSitemaps() {
-  return Promise.resolve(this.getSitemapsSync());
-};
-
-
-Robots.prototype.getCrawlDelay = function getCrawlDelay() {
-  return Promise.resolve(this.getCrawlDelaySync());
+// @TODO rework to be cleaner
+Robots.prototype.canCrawl = function canCrawl(url, callback) {
+  const isCached = this.isCached(url);
+  if (isCached) {
+    const crawlable = this.canCrawlSync(url);
+    if (callback) {
+      callback(crawlable);
+    } else {
+      return Promise.resolve(crawlable);
+    }
+  }
+  return this.fetch(url).then(() => this.canCrawlSync(url));
 };
 
 Robots.prototype.canCrawlSync = function canFetch(url) {
@@ -104,12 +107,48 @@ Robots.prototype.canCrawlSync = function canFetch(url) {
   return true;
 };
 
+Robots.prototype.getSitemaps = function getSitemaps(callback) {
+  const sitemaps = this.getSitemapsSync();
+  if (callback) {
+    callback(sitemaps)
+  } else {
+    return Promise.resolve(sitemaps);
+  }
+};
+
+Robots.prototype.getSitemapsSync = function getSitemaps() {
+  const botRecords = this.robotsCache[this.active];
+  return botRecords ? botRecords.sitemaps : [];
+};
+
+Robots.prototype.getCrawlDelay = function getCrawlDelay(callback) {
+  const crawlDelay = this.getCrawlDelaySync();
+  if (callback) {
+    callback(crawlDelay)
+  } else {
+    return Promise.resolve(crawlDelay);
+  }
+};
+
+Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
+  const botRecords = this.getRecordsForAgent();
+  return botRecords ? botRecords.crawlDelay : 0;
+};
+
+Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray, callback) {
+  const crawlableLinks = this.getCrawlableLinksSync(linkArray);
+  if (callback) {
+    callback(crawlableLinks);
+  } else {
+    return Promise.resolve(crawlableLinks);
+  }
+};
 
 /*
  * Takes an array of links and returns an array of links which are crawlable
  * for the given domain.
  */
-Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray) {
+Robots.prototype.getCrawlableLinksSync = function getCrawlableLinksSync(linkArray) {
   const links = linkArray instanceof Array ? linkArray : [linkArray];
   const crawlableLinks = [];
   const botGroup = this.getRecordsForAgent();
@@ -123,18 +162,19 @@ Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray) {
   return crawlableLinks;
 };
 
-Robots.prototype.getCrawlableLinksP = function getCrawlableLinksP(linkArray) {
-  return Promise.resolve(this.getCrawlableLinks(linkArray));
+Robots.prototype.getPreferredHost = function getPreferredHost(callback) {
+  const host = this.getPreferredHostSync();
+  if (callback) {
+    callback(host);
+  } else {
+    return Promise.resolve(host);
+  }
 };
 
-Robots.prototype.getSitemapsSync = function getSitemaps() {
-  const botRecords = this.robotsCache[this.active];
-  return botRecords ? botRecords.sitemaps : [];
-};
-
-Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
-  const botRecords = this.getRecordsForAgent();
-  return botRecords ? botRecords.crawlDelay : 0;
+Robots.prototype.getPreferredHostSync = function getPreferredHostSync() {
+  const botRecords = this.robotsCache[this.active] || {};
+  // console.log(botRecords);
+  return botRecords.host
 };
 
 Robots.prototype.setUserAgent = function setUserAgent(agent) {

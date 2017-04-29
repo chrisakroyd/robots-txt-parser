@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 describe('can-parse-user-agents', () => {
   const parseResult = parse(exampleRobotsShort);
-  const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps');
+  const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps' && val !== 'host');
   it('Expect there to be multiple user agent strings.', () => {
     expect(userAgents).to.have.length.above(0);
   });
