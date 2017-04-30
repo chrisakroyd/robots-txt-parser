@@ -1,4 +1,5 @@
 const get = require('./get.js');
+const isFunction = require('lodash.isfunction');
 const parser = require('./parser.js');
 const util = require('./util.js');
 
@@ -60,6 +61,7 @@ Robots.prototype.fetch = function addRobots(link) {
     .then((data) => {
       this.robotsCache[formattedLink] = parser(data);
       this.active = link;
+      return this.robotsCache[formattedLink];
     });
 };
 
@@ -72,7 +74,7 @@ Robots.prototype.useRobotsFor = function useRobots(url, callback) {
   const isCached = this.isCached(link);
   if (isCached) {
     this.active = link;
-    if (callback) {
+    if (isFunction(callback)) {
       callback();
     } else {
       return Promise.resolve();
@@ -87,7 +89,7 @@ Robots.prototype.canCrawl = function canCrawl(url, callback) {
   const isCached = this.isCached(url);
   if (isCached) {
     const crawlable = this.canCrawlSync(url);
-    if (callback) {
+    if (isFunction(callback)) {
       callback(crawlable);
     } else {
       return Promise.resolve(crawlable);
@@ -109,7 +111,7 @@ Robots.prototype.canCrawlSync = function canFetch(url) {
 
 Robots.prototype.getSitemaps = function getSitemaps(callback) {
   const sitemaps = this.getSitemapsSync();
-  if (callback) {
+  if (isFunction(callback)) {
     callback(sitemaps)
   } else {
     return Promise.resolve(sitemaps);
@@ -123,7 +125,7 @@ Robots.prototype.getSitemapsSync = function getSitemaps() {
 
 Robots.prototype.getCrawlDelay = function getCrawlDelay(callback) {
   const crawlDelay = this.getCrawlDelaySync();
-  if (callback) {
+  if (isFunction(callback)) {
     callback(crawlDelay)
   } else {
     return Promise.resolve(crawlDelay);
@@ -137,7 +139,7 @@ Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
 
 Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray, callback) {
   const crawlableLinks = this.getCrawlableLinksSync(linkArray);
-  if (callback) {
+  if (isFunction(callback)) {
     callback(crawlableLinks);
   } else {
     return Promise.resolve(crawlableLinks);
@@ -164,7 +166,7 @@ Robots.prototype.getCrawlableLinksSync = function getCrawlableLinksSync(linkArra
 
 Robots.prototype.getPreferredHost = function getPreferredHost(callback) {
   const host = this.getPreferredHostSync();
-  if (callback) {
+  if (isFunction(callback)) {
     callback(host);
   } else {
     return Promise.resolve(host);
@@ -173,7 +175,6 @@ Robots.prototype.getPreferredHost = function getPreferredHost(callback) {
 
 Robots.prototype.getPreferredHostSync = function getPreferredHostSync() {
   const botRecords = this.robotsCache[this.active] || {};
-  // console.log(botRecords);
   return botRecords.host
 };
 
