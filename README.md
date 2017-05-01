@@ -56,7 +56,7 @@ Returns true if a robots.txt has already been fetched and cached by the robots-t
 
 ```js
 robots.isCrawled('https://example.com'); // true or false
-robots.isCrawled('example.com); // Attempts to check the cache for only http:// and returns true or false.
+robots.isCrawled('example.com'); // Attempts to check the cache for only http:// and returns true or false.
 ```
 
 ### fetch(url)
