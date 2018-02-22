@@ -101,7 +101,7 @@ function parser(rawString) {
         break;
       // Non standard but included for completeness.
       case HOST:
-        if (!('host' in robotsObj)) {
+        if (!(HOST in robotsObj)) {
           robotsObj.host = record.value;
         }
         break;

@@ -155,8 +155,8 @@ Robots.prototype.getCrawlableLinksSync = function getCrawlableLinksSync(linkArra
   const crawlableLinks = [];
   const botGroup = this.getRecordsForAgent();
   if (botGroup) {
-    for(let i = 0; i < links.length; i +=1) {
-      if(this.canVisit(links[i], botGroup)) {
+    for (let i = 0; i < links.length; i += 1) {
+      if (this.canVisit(links[i], botGroup)) {
         crawlableLinks.push(links[i]);
       }
     }
@@ -184,6 +184,38 @@ Robots.prototype.setUserAgent = function setUserAgent(agent) {
 
 Robots.prototype.setAllowOnNeutral = function setAllowOnNeutral(allow) {
   this.opts.allowOnNeutral = allow;
+};
+
+Robots.prototype.saveCache = function saveCache(filePath = './robots-cache.json', callback) {
+  return util.createDirectories(filePath)
+    .then(() => util.writeFile(filePath, JSON.stringify(this.robotsCache)))
+    .then(() => {
+      if (isFunction(callback)) {
+        callback();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      if (isFunction(callback)) {
+        callback(err);
+      }
+    });
+};
+
+Robots.prototype.loadCache = function loadCache(filePath = './robots-cache.json', callback) {
+  return util.readFile(filePath)
+    .then((data) => {
+      this.robotsCache = JSON.parse(data);
+      if (isFunction(callback)) {
+          callback();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      if (isFunction(callback)) {
+        callback(err);
+      }
+    });
 };
 
 module.exports = Robots;
