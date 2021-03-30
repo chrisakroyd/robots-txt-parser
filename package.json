@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChristopherAkroyd/robots-txt-parser.git"
+    "url": "git+https://github.com/ChrisAkroyd/robots-txt-parser.git"
   },
   "author": "Chris Akroyd",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ChristopherAkroyd/robots-txt-parser/issues"
+    "url": "https://github.com/ChrisAkroyd/robots-txt-parser/issues"
   },
-  "homepage": "https://github.com/ChristopherAkroyd/robots-txt-parser#readme",
+  "homepage": "https://github.com/ChrisAkroyd/robots-txt-parser#readme",
   "dependencies": {
     "fast-url-parser": "^1.1.3",
     "is-absolute-url": "^2.1.0",
