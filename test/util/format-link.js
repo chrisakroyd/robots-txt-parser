@@ -25,6 +25,18 @@ const links = [
   }, {
     string: 'mailto:someone@example.com',
     result: 'http://example.com',
+  }, {
+    string: 'fakeaddress.de',
+    result: 'http://fakeaddress.de',
+  }, {
+    string: 'cheese.nl',
+    result: 'http://cheese.nl',
+  }, {
+    string: 'mailto:someone@example.co.uk',
+    result: 'http://example.co.uk',
+  }, {
+    string: 'https://cheese.nl',
+    result: 'https://cheese.nl',
   },
 ];
 
