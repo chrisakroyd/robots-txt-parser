@@ -58,22 +58,28 @@ function groupMemberRecord(value) {
 
 function parser(rawString) {
   const lines = splitOnLines(cleanString(rawString));
+
   const robotsObj = {
     sitemaps: [],
   };
   let agent = '';
+
   lines.forEach((line) => {
     const record = parseRecord(line);
+
     switch (record.field) {
       case USER_AGENT:
-        // Bot names are non-case sensitive.
-        agent = record.value = record.value.toLowerCase();
-        if (agent.length > 0) {
+        const recordValue = record.value.toLowerCase();
+        if (recordValue !== agent && recordValue.length > 0) {
+          // Bot names are non-case sensitive.
+          agent = recordValue;
           robotsObj[agent] = {
             allow: [],
             disallow: [],
             crawlDelay: 0,
           };
+        } else if (recordValue.length === 0) {  // Malformed user-agent, ignore its rules.
+          agent = '';
         }
         break;
       // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
@@ -93,7 +99,6 @@ function parser(rawString) {
           robotsObj.sitemaps.push(record.value);
         }
         break;
-      // @TODO test crawl delay parameter.
       case CRAWL_DELAY:
         if (agent.length > 0) {
           robotsObj[agent].crawlDelay = Number.parseInt(record.value, 10);
