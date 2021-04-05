@@ -9,8 +9,8 @@ const hasNonHttpProtocol = ['mailto://test@test.com', 'ftp://usr:password@ftp.te
 const hasHttpProtocol = ['http://store.steampowered.com/', 'http://bbc.co.uk/news/test',
   'http://chaijs.com/api/bdd/#method_property', 'http://www.robotstxt.org/meta.html'];
 const hasHttpsProtocol = ['https://en.wikipedia.org/wiki/File_Transfer_Protocol',
-  'https://letsencrypt.org/getting-started/', 'https://github.com/ChristopherAkroyd/robots-txt-parser',
-  'https://www.reddit.com/r/news/'];
+  'https://letsencrypt.org/getting-started/', 'https://github.com/ChrisAkroyd/robots-txt-parser',
+  'https://www.reddit.com/r/news/', 'https://bcc.nl'];
 
 const hasProtocol = [].concat.apply(...[hasHttpProtocol, hasHttpsProtocol, hasNonHttpProtocol]);
 
