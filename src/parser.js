@@ -66,8 +66,8 @@ function groupMemberRecord(value) {
 function parser(rawString) {
   let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
 
-  // Fallback to the record based split method.
-  if (lines.length === 0) {
+  // Fallback to the record based split method if we find only one line.
+  if (lines.length === 1) {
     lines = robustSplit(cleanComments(rawString));
   }
 
