@@ -10,17 +10,24 @@ const HOST = 'host';
 const comments = /#.*$/gm;
 const whitespace = ' ';
 const lineEndings = /[\r\n]+/g;
+const recordSlices = /(\w+-)?\w+:\s\S*/g;
 
-function cleanString(rawString) {
+function cleanComments(rawString) {
   // Replace comments and whitespace
   return rawString
-    .replace(comments, '')
-    .replace(whitespace, '')
-    .trim();
+    .replace(comments, '');
+}
+
+function cleanSpaces(rawString) {
+  return rawString.replace(whitespace, '').trim();
 }
 
 function splitOnLines(string) {
   return string.split(lineEndings);
+}
+
+function robustSplit(string) {
+  return [...string.match(recordSlices)].map((line) => line.replace(whitespace, '').trim());
 }
 
 function parseRecord(line) {
@@ -57,7 +64,12 @@ function groupMemberRecord(value) {
 
 
 function parser(rawString) {
-  const lines = splitOnLines(cleanString(rawString));
+  let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
+
+  // Fallback to the record based split method.
+  if (lines.length === 0) {
+    lines = robustSplit(cleanComments(rawString));
+  }
 
   const robotsObj = {
     sitemaps: [],
@@ -66,7 +78,6 @@ function parser(rawString) {
 
   lines.forEach((line) => {
     const record = parseRecord(line);
-
     switch (record.field) {
       case USER_AGENT:
         const recordValue = record.value.toLowerCase();
@@ -114,6 +125,7 @@ function parser(rawString) {
         break;
     }
   });
+
   // Return only unique sitemaps.
   robotsObj.sitemaps = robotsObj.sitemaps.filter((val, i, s) => s.indexOf(val) === i);
   return robotsObj;
