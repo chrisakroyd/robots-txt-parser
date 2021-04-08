@@ -5,3 +5,4 @@ require('./can-parse-allow.js');
 require('./can-parse-disallow.js');
 require('./can-parse-crawl-delay.js');
 require('./ignores-malformed-values.js');
+require('./can-parse-test-files.js');
