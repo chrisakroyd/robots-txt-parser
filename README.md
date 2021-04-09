@@ -31,11 +31,14 @@ const robots = robotsParser(
 robots.useRobotsFor('http://Example.com')
   .then(() => {
     robots.canCrawlSync('http://example.com/news'); // Returns true if the link can be crawled, false if not.
-    robots.canCrawl('http://example.com/news', (value) => { console.log('Crawlable: ', value); }) // Calls the callback with true if the link is crawlable, false if not.
+    robots.canCrawl('http://example.com/news', (value) => {
+      console.log('Crawlable: ', value);
+    }); // Calls the callback with true if the link is crawlable, false if not.
     robots.canCrawl('http://example.com/news') // If no callback is provided, returns a promise which resolves with true if the link is crawlable, false if not.
-        .then((value) => {
-            console.log('Crawlable: ', value);
-        });
+      .then((value) => {
+        console.log('Crawlable: ', value);
+      });
+  });
 ```
 ## Docs
 ### parseRobots(key, string)
