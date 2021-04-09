@@ -8,8 +8,8 @@ Via NPM: `npm install robots-txt-parser --save`.
 
 After installing robots-txt-parser it needs to be required and initialised:
 ```js
-var robotsParser = require('robots-txt-parser');
-var robots = robotsParser(
+const robotsParser = require('robots-txt-parser');
+const robots = robotsParser(
   {
     userAgent: 'Googlebot', // The default user agent to use when looking for allow/disallow rules, if this agent isn't listed in the active robots.txt, we use *.
     allowOnNeutral: false // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
@@ -20,9 +20,9 @@ Example Usage:
 
 
 ```js
-var robotsParser = require('robots-txt-parser');
+const robotsParser = require('robots-txt-parser');
 
-var robots = robotsParser(
+const robots = robotsParser(
   {
     userAgent: 'Googlebot', // The default user agent to use when looking for allow/disallow rules, if this agent isn't listed in the active robots.txt, we use *.
     allowOnNeutral: false // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
