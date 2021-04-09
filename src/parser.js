@@ -27,7 +27,7 @@ function splitOnLines(string) {
 }
 
 function robustSplit(string) {
-  return [...string.match(recordSlices)].map((line) => line.replace(whitespace, '').trim());
+  return [...string.match(recordSlices)].map(cleanSpaces);
 }
 
 function parseRecord(line) {
@@ -61,7 +61,6 @@ function groupMemberRecord(value) {
     path: parsePattern(value),
   };
 }
-
 
 function parser(rawString) {
   let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
