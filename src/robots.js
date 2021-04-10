@@ -186,4 +186,8 @@ Robots.prototype.setAllowOnNeutral = function setAllowOnNeutral(allow) {
   this.opts.allowOnNeutral = allow;
 };
 
+Robots.prototype.clearCache = function clearCache() {
+  this.robotsCache = {};
+};
+
 module.exports = Robots;

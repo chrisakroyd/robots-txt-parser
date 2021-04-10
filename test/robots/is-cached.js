@@ -26,3 +26,22 @@ describe('is-cached', () => {
     });
   });
 });
+
+describe('clear-cache', () => {
+  cachedLinks.forEach((link) => {
+    robotsParser.parseRobots(link, exampleRobotsShort);
+  });
+
+  it('Expect a robots.txt to be cached for all links.', () => {
+    cachedLinks.forEach((link) => {
+      expect(robotsParser.isCached(link)).to.be.true;
+    });
+  });
+
+  it('Expect a robots.txt to no longer be cached.', () => {
+    robotsParser.clearCache();
+    cachedLinks.forEach((link) => {
+      expect(robotsParser.isCached(link)).to.be.false;
+    });
+  });
+});
