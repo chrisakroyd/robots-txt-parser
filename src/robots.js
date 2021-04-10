@@ -11,7 +11,7 @@ const DFLT_OPTS = {
 function Robots(opts = {}) {
   this.robotsCache = {};
   this.opts = {
-    userAgent: opts.userAgent ? opts.userAgent.toLowerCase() : DFLT_OPTS.userAgent,
+    userAgent: opts.userAgent ? opts.userAgent.toLowerCase() : DFLT_OPTS.userAgent.toLowerCase(),
     allowOnNeutral: opts.allowOnNeutral ? opts.allowOnNeutral : DFLT_OPTS.allowOnNeutral,
   };
 

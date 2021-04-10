@@ -8,8 +8,8 @@ Via NPM: `npm install robots-txt-parser --save`.
 
 After installing robots-txt-parser it needs to be required and initialised:
 ```js
-var robotsParser = require('robots-txt-parser');
-var robots = robotsParser(
+const robotsParser = require('robots-txt-parser');
+const robots = robotsParser(
   {
     userAgent: 'Googlebot', // The default user agent to use when looking for allow/disallow rules, if this agent isn't listed in the active robots.txt, we use *.
     allowOnNeutral: false // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
@@ -20,9 +20,9 @@ Example Usage:
 
 
 ```js
-var robotsParser = require('robots-txt-parser');
+const robotsParser = require('robots-txt-parser');
 
-var robots = robotsParser(
+const robots = robotsParser(
   {
     userAgent: 'Googlebot', // The default user agent to use when looking for allow/disallow rules, if this agent isn't listed in the active robots.txt, we use *.
     allowOnNeutral: false // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
@@ -31,11 +31,14 @@ var robots = robotsParser(
 robots.useRobotsFor('http://Example.com')
   .then(() => {
     robots.canCrawlSync('http://example.com/news'); // Returns true if the link can be crawled, false if not.
-    robots.canCrawl('http://example.com/news', (value) => { console.log('Crawlable: ', value); }) // Calls the callback with true if the link is crawlable, false if not.
+    robots.canCrawl('http://example.com/news', (value) => {
+      console.log('Crawlable: ', value);
+    }); // Calls the callback with true if the link is crawlable, false if not.
     robots.canCrawl('http://example.com/news') // If no callback is provided, returns a promise which resolves with true if the link is crawlable, false if not.
-        .then((value) => {
-            console.log('Crawlable: ', value);
-        });
+      .then((value) => {
+        console.log('Crawlable: ', value);
+      });
+  });
 ```
 ## Docs
 ### parseRobots(key, string)

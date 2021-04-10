@@ -4,7 +4,7 @@ const parse = require('../../src/parser.js');
 
 const expect = chai.expect;
 
-describe('can-parse-user-agents', () => {
+describe('Ignores Malformed Values', () => {
   const parseResult = parse(exampleRobotsMalformed);
   const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps' && val !== 'host');
 

@@ -10,17 +10,24 @@ const HOST = 'host';
 const comments = /#.*$/gm;
 const whitespace = ' ';
 const lineEndings = /[\r\n]+/g;
+const recordSlices = /(\w+-)?\w+:\s\S*/g;
 
-function cleanString(rawString) {
+function cleanComments(rawString) {
   // Replace comments and whitespace
   return rawString
-    .replace(comments, '')
-    .replace(whitespace, '')
-    .trim();
+    .replace(comments, '');
+}
+
+function cleanSpaces(rawString) {
+  return rawString.replace(whitespace, '').trim();
 }
 
 function splitOnLines(string) {
   return string.split(lineEndings);
+}
+
+function robustSplit(string) {
+  return [...string.match(recordSlices)].map(cleanSpaces);
 }
 
 function parseRecord(line) {
@@ -55,25 +62,34 @@ function groupMemberRecord(value) {
   };
 }
 
-
 function parser(rawString) {
-  const lines = splitOnLines(cleanString(rawString));
+  let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
+
+  // Fallback to the record based split method if we find only one line.
+  if (lines.length === 1) {
+    lines = robustSplit(cleanComments(rawString));
+  }
+
   const robotsObj = {
     sitemaps: [],
   };
   let agent = '';
+
   lines.forEach((line) => {
     const record = parseRecord(line);
     switch (record.field) {
       case USER_AGENT:
-        // Bot names are non-case sensitive.
-        agent = record.value = record.value.toLowerCase();
-        if (agent.length > 0) {
+        const recordValue = record.value.toLowerCase();
+        if (recordValue !== agent && recordValue.length > 0) {
+          // Bot names are non-case sensitive.
+          agent = recordValue;
           robotsObj[agent] = {
             allow: [],
             disallow: [],
             crawlDelay: 0,
           };
+        } else if (recordValue.length === 0) {  // Malformed user-agent, ignore its rules.
+          agent = '';
         }
         break;
       // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
@@ -93,7 +109,6 @@ function parser(rawString) {
           robotsObj.sitemaps.push(record.value);
         }
         break;
-      // @TODO test crawl delay parameter.
       case CRAWL_DELAY:
         if (agent.length > 0) {
           robotsObj[agent].crawlDelay = Number.parseInt(record.value, 10);
@@ -109,6 +124,7 @@ function parser(rawString) {
         break;
     }
   });
+
   // Return only unique sitemaps.
   robotsObj.sitemaps = robotsObj.sitemaps.filter((val, i, s) => s.indexOf(val) === i);
   return robotsObj;
