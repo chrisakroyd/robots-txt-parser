@@ -306,6 +306,22 @@ robots.setAllowOnNeutral(true); // If the allow/disallow rules are balanced, can
 robots.setAllowOnNeutral(false); // If the allow/disallow rules are balanced, canCrawl returns false.
 ```
 
+### clearCache()
+
+The cache can get extremely long over extended crawling, this simple method resets the cache.
+
+##### Parameters
+None
+
+##### Returns
+None
+
+##### Example
+
+```js
+robots.clearCache();
+```
+
 # License
 See [LICENSE](https://github.com/ChristopherAkroyd/robots-txt-parser/blob/master/LICENSE) file.
 
