@@ -1,5 +1,4 @@
 const get = require('./get.js');
-const isFunction = require('lodash.isfunction');
 const parser = require('./parser.js');
 const util = require('./util.js');
 
@@ -74,7 +73,7 @@ Robots.prototype.useRobotsFor = function useRobots(url, callback) {
   const isCached = this.isCached(link);
   if (isCached) {
     this.active = link;
-    if (isFunction(callback)) {
+    if (util.isFunction(callback)) {
       callback();
     } else {
       return Promise.resolve();
@@ -89,7 +88,7 @@ Robots.prototype.canCrawl = function canCrawl(url, callback) {
   const isCached = this.isCached(url);
   if (isCached) {
     const crawlable = this.canCrawlSync(url);
-    if (isFunction(callback)) {
+    if (util.isFunction(callback)) {
       callback(crawlable);
     } else {
       return Promise.resolve(crawlable);
@@ -111,7 +110,7 @@ Robots.prototype.canCrawlSync = function canFetch(url) {
 
 Robots.prototype.getSitemaps = function getSitemaps(callback) {
   const sitemaps = this.getSitemapsSync();
-  if (isFunction(callback)) {
+  if (util.isFunction(callback)) {
     callback(sitemaps)
   } else {
     return Promise.resolve(sitemaps);
@@ -125,7 +124,7 @@ Robots.prototype.getSitemapsSync = function getSitemaps() {
 
 Robots.prototype.getCrawlDelay = function getCrawlDelay(callback) {
   const crawlDelay = this.getCrawlDelaySync();
-  if (isFunction(callback)) {
+  if (util.isFunction(callback)) {
     callback(crawlDelay)
   } else {
     return Promise.resolve(crawlDelay);
@@ -139,7 +138,7 @@ Robots.prototype.getCrawlDelaySync = function getCrawlDelay() {
 
 Robots.prototype.getCrawlableLinks = function getCrawlableLinks(linkArray, callback) {
   const crawlableLinks = this.getCrawlableLinksSync(linkArray);
-  if (isFunction(callback)) {
+  if (util.isFunction(callback)) {
     callback(crawlableLinks);
   } else {
     return Promise.resolve(crawlableLinks);
@@ -166,7 +165,7 @@ Robots.prototype.getCrawlableLinksSync = function getCrawlableLinksSync(linkArra
 
 Robots.prototype.getPreferredHost = function getPreferredHost(callback) {
   const host = this.getPreferredHostSync();
-  if (isFunction(callback)) {
+  if (util.isFunction(callback)) {
     callback(host);
   } else {
     return Promise.resolve(host);

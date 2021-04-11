@@ -51,9 +51,14 @@ function applyRecords(path, records) {
   }
 }
 
+function isFunction(value) {
+  return typeof value === 'function';
+}
+
 module.exports = {
   hasHttpProtocol,
   addProtocol,
   formatLink,
   applyRecords,
+  isFunction,
 };
