@@ -27,7 +27,7 @@ function splitOnLines(string) {
 }
 
 function robustSplit(string) {
-  return [...string.match(recordSlices)].map(cleanSpaces);
+  return !string.includes('<html>') ? [...string.match(recordSlices)].map(cleanSpaces) : [];
 }
 
 function parseRecord(line) {
