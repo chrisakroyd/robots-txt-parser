@@ -22,7 +22,7 @@
     "test-robots": "mocha test/robots/*.js",
     "test-parser": "mocha test/parser/*.js",
     "test-util": "mocha test/util/*.js",
-    "coverage": "nyc mocha test/*.js"
+    "coverage": "nyc mocha test/**/*.js"
   },
   "repository": {
     "type": "git",
