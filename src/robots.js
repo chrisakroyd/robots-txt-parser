@@ -5,6 +5,7 @@ const util = require('./util.js');
 const DFLT_OPTS = {
   userAgent: '*',
   allowOnNeutral: true,
+  timeout: 10000,
 };
 
 function Robots(opts = {}) {
@@ -12,6 +13,7 @@ function Robots(opts = {}) {
   this.opts = {
     userAgent: opts.userAgent ? opts.userAgent.toLowerCase() : DFLT_OPTS.userAgent.toLowerCase(),
     allowOnNeutral: opts.allowOnNeutral ? opts.allowOnNeutral : DFLT_OPTS.allowOnNeutral,
+    timeout: opts.timeout ? opts.timeout : DFLT_OPTS.timeout,
   };
 
   this.getRecordsForAgent = () => {
@@ -56,7 +58,7 @@ Robots.prototype.parseRobots = function parseRobots(url, string) {
 Robots.prototype.fetch = function addRobots(link) {
   const formattedLink = util.formatLink(link);
   const robotsLink = `${formattedLink}/robots.txt`;
-  return get(robotsLink)
+  return get(robotsLink, this.opts.timeout)
     .then((data) => {
       this.robotsCache[formattedLink] = parser(data);
       this.active = link;
