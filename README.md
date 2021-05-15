@@ -40,8 +40,29 @@ robots.useRobotsFor('http://Example.com')
       });
   });
 ```
-## Docs
-### parseRobots(key, string)
+
+## Condensed Documentation
+
+Below is a condensed form of the documentation, each is a function that can be found on the robotsParser object.
+
+| Method | Parameters | Return |
+| ----------- | -------- | ------ |
+| [parseRobots(key, string)](#parseRobots(key,string)) | `key:String, string:String` | None |
+| [isCached(domain)](#isCached(domain)) | `domain:String` | Boolean for whether robots.txt for url is cached. |
+| [fetch(url)](#fetch(url)) | `url:String` | Promise, resolved when robots.txt retrieved. |
+| [useRobotsFor(url)](#useRobotsFor(url)) | `url:String` | Promise, resolved when robots.txt is fetched. |
+| [canCrawl(url)](#canCrawl(url))| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
+| [getSitemaps()](#getSitemaps())| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getCrawlDelay()](#getCrawlDelay()) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
+| [getCrawlableLinks(links)](#getCrawlableLinks(links)) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getPreferredHost()](#getPreferredHost()) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
+| [setUserAgent(userAgent)](#setUserAgent(userAgent)) | `userAgent:String` | None. |
+| [setAllowOnNeutral(allow)](#setAllowOnNeutral(allow))  | `allow:Boolean` | None. |
+| [clearCache()](#clearCache()) | `None` | None. |
+
+## Full Documentation
+
+### parseRobots(key,string)
 
 Parses a string representation of a robots.txt file and cache's it with the given key.
 
