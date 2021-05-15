@@ -47,18 +47,18 @@ Below is a condensed form of the documentation, each is a function that can be f
 
 | Method | Parameters | Return |
 | ----------- | -------- | ------ |
-| [parseRobots(key, string)](#parseRobots(key,string)) | `key:String, string:String` | None |
-| [isCached(domain)](#isCached(domain)) | `domain:String` | Boolean for whether robots.txt for url is cached. |
-| [fetch(url)](#fetch(url)) | `url:String` | Promise, resolved when robots.txt retrieved. |
-| [useRobotsFor(url)](#useRobotsFor(url)) | `url:String` | Promise, resolved when robots.txt is fetched. |
-| [canCrawl(url)](#canCrawl(url))| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
-| [getSitemaps()](#getSitemaps())| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getCrawlDelay()](#getCrawlDelay()) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
-| [getCrawlableLinks(links)](#getCrawlableLinks(links)) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getPreferredHost()](#getPreferredHost()) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
-| [setUserAgent(userAgent)](#setUserAgent(userAgent)) | `userAgent:String` | None. |
-| [setAllowOnNeutral(allow)](#setAllowOnNeutral(allow))  | `allow:Boolean` | None. |
-| [clearCache()](#clearCache()) | `None` | None. |
+| [parseRobots(key, string)](#parseRobotskeystring) | `key:String, string:String` | None |
+| [isCached(domain)](#isCacheddomain) | `domain:String` | Boolean for whether robots.txt for url is cached. |
+| [fetch(url)](#fetchurl) | `url:String` | Promise, resolved when robots.txt retrieved. |
+| [useRobotsFor(url)](#useRobotsForurl) | `url:String` | Promise, resolved when robots.txt is fetched. |
+| [canCrawl(url)](#canCrawlurl)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
+| [getSitemaps()](#getSitemaps)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getCrawlDelay()](#getCrawlDelay) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
+| [getCrawlableLinks(links)](#getCrawlableLinkslinks) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getPreferredHost()](#getPreferredHost) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
+| [setUserAgent(userAgent)](#setUserAgentuserAgent) | `userAgent:String` | None. |
+| [setAllowOnNeutral(allow)](#setAllowOnNeutralallow)  | `allow:Boolean` | None. |
+| [clearCache()](#clearCache) | `None` | None. |
 
 ## Full Documentation
 
