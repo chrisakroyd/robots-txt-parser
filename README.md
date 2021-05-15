@@ -58,7 +58,7 @@ Below is a condensed form of the documentation, each is a function that can be f
 | [getPreferredHost()](#getPreferredHost()) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
 | [setUserAgent(userAgent)](#setUserAgent(userAgent)) | `userAgent:String` | None. |
 | [setAllowOnNeutral(allow)](#setAllowOnNeutral(allow))  | `allow:Boolean` | None. |
-| [clearCache()](#clearCache()) | `None` | None. |
+| [clearCache()](#clearCache) | `None` | None. |
 
 ## Full Documentation
 
