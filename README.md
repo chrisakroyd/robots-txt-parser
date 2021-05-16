@@ -51,11 +51,11 @@ Below is a condensed form of the documentation, each is a function that can be f
 | [isCached(domain)](#isCacheddomain) | `domain:String` | Boolean for whether robots.txt for url is cached. |
 | [fetch(url)](#fetchurl) | `url:String` | Promise, resolved when robots.txt retrieved. |
 | [useRobotsFor(url)](#useRobotsForurl) | `url:String` | Promise, resolved when robots.txt is fetched. |
-| [canCrawl(url)](#canCrawlurl)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
-| [getSitemaps()](#getSitemaps)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getCrawlDelay()](#getCrawlDelay) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
-| [getCrawlableLinks(links)](#getCrawlableLinkslinks) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getPreferredHost()](#getPreferredHost) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
+| [canCrawl(url)](#canCrawlurl-callback)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
+| [getSitemaps()](#getSitemapscallback)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getCrawlDelay()](#getCrawlDelaycallback) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
+| [getCrawlableLinks(links)](#getCrawlableLinkslinks-callbackk) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getPreferredHost()](#getPreferredHostcallback) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
 | [setUserAgent(userAgent)](#setUserAgentuserAgent) | `userAgent:String` | None. |
 | [setAllowOnNeutral(allow)](#setAllowOnNeutralallow)  | `allow:Boolean` | None. |
 | [clearCache()](#clearCache) | `None` | None. |
