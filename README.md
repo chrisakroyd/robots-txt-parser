@@ -54,7 +54,7 @@ Below is a condensed form of the documentation, each is a function that can be f
 | [canCrawl(url)](#canCrawlurl-callback)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
 | [getSitemaps()](#getSitemapscallback)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
 | [getCrawlDelay()](#getCrawlDelaycallback) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
-| [getCrawlableLinks(links)](#getCrawlableLinkslinks-callbackk) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getCrawlableLinks(links)](#getCrawlableLinkslinks-callback) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
 | [getPreferredHost()](#getPreferredHostcallback) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
 | [setUserAgent(userAgent)](#setUserAgentuserAgent) | `userAgent:String` | None. |
 | [setAllowOnNeutral(allow)](#setAllowOnNeutralallow)  | `allow:Boolean` | None. |
@@ -62,9 +62,31 @@ Below is a condensed form of the documentation, each is a function that can be f
 
 ## Full Documentation
 
+---
+
 ### parseRobots(key,string)
 
 Parses a string representation of a robots.txt file and cache's it with the given key.
+
+##### Parameters
+* key -> Can be any URL.
+* string -> String representation of a robots.txt file.
+
+##### Returns
+None.
+
+##### Example
+
+```js
+robots.parseRobots('https://example.com',
+  `
+   User-agent: *
+   Allow: /*.php$
+   Disallow: /
+  `);
+```
+
+---
 
 ### isCached(domain)
 
@@ -79,9 +101,11 @@ Returns true if a robots.txt has already been fetched and cached by the robots-t
 ##### Example
 
 ```js
-robots.isCrawled('https://example.com'); // true or false
-robots.isCrawled('example.com'); // Attempts to check the cache for only http:// and returns true or false.
+robots.isCached('https://example.com'); // true or false
+robots.isCached('example.com'); // Attempts to check the cache for only http:// and returns true or false.
 ```
+
+---
 
 ### fetch(url)
 
@@ -102,6 +126,8 @@ robots.fetch('https://example.com/robots.txt')
     });
 ```
 
+---
+
 ### useRobotsFor(url)
 
 Attempts to download and use the robots.txt at the given url, if the robots.txt has already been downloaded, reads from the cached copy instead.
@@ -120,6 +146,8 @@ robots.useRobotsFor('https://example.com/news')
         // Logic to check if links are crawlable.
     });
 ```
+
+---
 
 ### canCrawl(url, callback)
 
@@ -140,21 +168,7 @@ robots.canCrawl('https://example.com/news')
     });
 ```
 
-### canCrawlSync(url)
-
-Tests whether a url can be crawled for the current active robots.txt and user agent. This won't attempt to fetch the robots.txt if it is not cached.
-
-##### Parameters
-* url -> Any url.
-
-##### Returns
-Returns a boolean value depending on whether the url is crawlable. If there is no cached robots.txt for this url, it will always return true.
-
-##### Example
-
-```js
-robots.canCrawlSync('https://example.com/news') // true or false.
-```
+---
 
 ### getSitemaps(callback)
 
@@ -175,20 +189,7 @@ robots.getSitemaps()
     });
 ```
 
-
-### getSitemapsSync()
-
-Returns a list of sitemaps present on the active robots.txt.
-
-##### Parameters
-None
-##### Returns
-An Array of Strings.
-##### Example
-
-```js
-robots.getSitemapsSync(); // Will be an array e.g. ['http://example.com/sitemap1.xml', 'http://example.com/sitemap2.xml'].
-```
+---
 
 ### getCrawlDelay(callback)
 
@@ -209,19 +210,7 @@ robots.getCrawlDelay()
     });
 ```
 
-### getCrawlDelaySync()
-
-Returns the crawl delay on specified in the active robots.txt's for the active user agent
-
-##### Parameters
-None
-##### Returns
-An Integer greater than or equal to 0.
-##### Example
-
-```js
-robots.getCrawlDelaySync(); // Will be an Integer.
-```
+---
 
 ### getCrawlableLinks(links, callback)
 Takes an array of links and returns an array of links which are crawlable
@@ -243,21 +232,7 @@ robots.getCrawlableLinks([])
     });
 ```
 
-### getCrawlableLinksSync(links)
-Takes an array of links and returns an array of links which are crawlable
-for the current active robots.txt.
-##### Parameters
-* links -> An array of links to check for crawlability.
-
-##### Returns
-An Array of all the links are crawlable.
-
-##### Example
-
-```js
-robots.getCrawlableLinks(['example.com/test/news', 'example.com/test/news/article']);  // Will return an array of the links that can be crawled.
-```
-
+---
 
 ### getPreferredHost(callback)
 
@@ -278,19 +253,7 @@ robots.getPreferredHost()
     });
 ```
 
-### getPreferredHostSync()
-
-Returns the preferred host name specified in the active robots.txt's host: directive or undefined if there isn't one.
-
-##### Parameters
-None
-##### Returns
-An String if the host is defined, undefined otherwise.
-##### Example
-
-```js
-robots.getPreferredHostSync(); // Will be a string if the host directive is defined .
-```
+---
 
 ### setUserAgent(userAgent)
 
@@ -309,6 +272,7 @@ robots.setUserAgent('exampleBot'); // When interacting with the robots.txt we no
 robots.setUserAgent('testBot'); // When interacting with the robots.txt we now look for records for 'testBot'.
 ```
 
+---
 
 ### setAllowOnNeutral(allow)
 
@@ -327,6 +291,8 @@ robots.setAllowOnNeutral(true); // If the allow/disallow rules are balanced, can
 robots.setAllowOnNeutral(false); // If the allow/disallow rules are balanced, canCrawl returns false.
 ```
 
+---
+
 ### clearCache()
 
 The cache can get extremely long over extended crawling, this simple method resets the cache.
@@ -341,6 +307,91 @@ None
 
 ```js
 robots.clearCache();
+```
+
+---
+
+## Synchronous API
+Synchronous variants of the API, will be deprecated in a future version.
+### canCrawlSync(url)
+
+Tests whether a url can be crawled for the current active robots.txt and user agent. This won't attempt to fetch the robots.txt if it is not cached.
+
+##### Parameters
+* url -> Any url.
+
+##### Returns
+Returns a boolean value depending on whether the url is crawlable. If there is no cached robots.txt for this url, it will always return true.
+
+##### Example
+
+```js
+robots.canCrawlSync('https://example.com/news') // true or false.
+```
+
+---
+
+### getSitemapsSync()
+
+Returns a list of sitemaps present on the active robots.txt.
+
+##### Parameters
+None
+##### Returns
+An Array of Strings.
+##### Example
+
+```js
+robots.getSitemapsSync(); // Will be an array e.g. ['http://example.com/sitemap1.xml', 'http://example.com/sitemap2.xml'].
+```
+
+---
+
+### getCrawlDelaySync()
+
+Returns the crawl delay on specified in the active robots.txt's for the active user agent
+
+##### Parameters
+None
+##### Returns
+An Integer greater than or equal to 0.
+##### Example
+
+```js
+robots.getCrawlDelaySync(); // Will be an Integer.
+```
+
+---
+
+### getCrawlableLinksSync(links)
+Takes an array of links and returns an array of links which are crawlable
+for the current active robots.txt.
+##### Parameters
+* links -> An array of links to check for crawlability.
+
+##### Returns
+An Array of all the links are crawlable.
+
+##### Example
+
+```js
+robots.getCrawlableLinks(['example.com/test/news', 'example.com/test/news/article']);  // Will return an array of the links that can be crawled.
+```
+
+---
+
+### getPreferredHostSync()
+
+Returns the preferred host name specified in the active robots.txt's host: directive or undefined if there isn't one.
+
+##### Parameters
+None
+##### Returns
+An String if the host is defined, undefined otherwise.
+##### Example
+
+```js
+robots.getPreferredHostSync(); // Will be a string if the host directive is defined .
 ```
 
 # License
