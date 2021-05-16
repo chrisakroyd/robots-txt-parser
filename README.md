@@ -47,18 +47,18 @@ Below is a condensed form of the documentation, each is a function that can be f
 
 | Method | Parameters | Return |
 | ----------- | -------- | ------ |
-| [parseRobots(key, string)](#parseRobots) | `key:String, string:String` | None |
-| [isCached(domain)](#isCached) | `domain:String` | Boolean for whether robots.txt for url is cached. |
+| [parseRobots(key, string)](#parserobots) | `key:String, string:String` | None |
+| [isCached(domain)](#iscached) | `domain:String` | Boolean for whether robots.txt for url is cached. |
 | [fetch(url)](#fetch) | `url:String` | Promise, resolved when robots.txt retrieved. |
-| [useRobotsFor(url)](#useRobotsFor) | `url:String` | Promise, resolved when robots.txt is fetched. |
-| [canCrawl(url)](#canCrawl)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
-| [getSitemaps()](#getSitemaps)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getCrawlDelay()](#getCrawlDelay) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
-| [getCrawlableLinks(links)](#getCrawlableLinks) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
-| [getPreferredHost()](#getPreferredHost) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
-| [setUserAgent(userAgent)](#setUserAgent) | `userAgent:String` | None. |
-| [setAllowOnNeutral(allow)](#setAllowOnNeutral)  | `allow:Boolean` | None. |
-| [clearCache()](#clearCache) | `None` | None. |
+| [useRobotsFor(url)](#userobotsfor) | `url:String` | Promise, resolved when robots.txt is fetched. |
+| [canCrawl(url)](#cancrawl)| `url:String, callback:Func (Opt)` | Promise, resolves with Boolean. |
+| [getSitemaps()](#getsitemaps)| `callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getCrawlDelay()](#getcrawldelay) | `callback:Func (Opt)` | Promise if no callback provided, resolves with Number. |
+| [getCrawlableLinks(links)](#getcrawlablelinks) | `links:[String], callback:Func (Opt)` | Promise if no callback provided, resolves with [String]. |
+| [getPreferredHost()](#getpreferredhost) | `callback:Func (Opt)` | Promise if no callback provided, resolves with String. |
+| [setUserAgent(userAgent)](#setuseragent) | `userAgent:String` | None. |
+| [setAllowOnNeutral(allow)](#setallowonneutral)  | `allow:Boolean` | None. |
+| [clearCache()](#clearcache) | `None` | None. |
 
 ## Full Documentation
 
