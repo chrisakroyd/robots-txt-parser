@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.0.6 - Documentation cleanup pass (16/05/2021)
+
+### Changed
+- Fixed scroll-to links to work on both github + npm.
+
 ## 1.0.5 - Documentation cleanup pass (16/05/2021)
 
 ### Changed
