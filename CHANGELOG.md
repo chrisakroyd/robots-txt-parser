@@ -1,10 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 1.0.5 - [Unreleased] 
+## 1.0.5 - Documentation cleanup pass (16/05/2021)
 
 ### Changed
 - Cleaned up readme file.
+- Documentation format improvements.
+- Fixed bad example.
 
 ## [1.0.4] - Minor additions and fixes (13/5/2021)
 
