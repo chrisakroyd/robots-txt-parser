@@ -2,7 +2,7 @@ const chai = require('chai');
 const exampleShort = require('../test-data/example-robots-txt-short.js');
 const parse = require('../../src/parser.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('correct-parse-formatting.', () => {
   const parseResult = parse(exampleShort);

@@ -1,9 +1,9 @@
 const chai = require('chai');
-const sitemaps = require('../test-data/example-robots-txt-sitemaps');
 const uniq = require('lodash/uniq');
+const sitemaps = require('../test-data/example-robots-txt-sitemaps');
 const parse = require('../../src/parser.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('can-parse-sitemaps', () => {
   const parseResult = parse(sitemaps);

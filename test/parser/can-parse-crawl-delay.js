@@ -2,11 +2,11 @@ const chai = require('chai');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 const parse = require('../../src/parser.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('can-parse-crawl-delays', () => {
   const parseResult = parse(exampleRobotsShort);
-  const userAgents = Object.keys(parseResult).filter(val => val !== 'sitemaps' && val !== 'host');
+  const userAgents = Object.keys(parseResult).filter((val) => val !== 'sitemaps' && val !== 'host');
   it('Expect no top-level crawlDelay key', () => {
     expect(parseResult).to.not.have.property('crawlDelay');
   });

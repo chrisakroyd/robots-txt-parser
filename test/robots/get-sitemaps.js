@@ -3,7 +3,7 @@ const robots = require('../../src/index.js');
 const parser = require('../../src/parser.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 const robotsParser = robots();
 
 describe('get-sitemaps', () => {
@@ -17,11 +17,11 @@ describe('get-sitemaps', () => {
 });
 
 describe('get-sitemaps-async', () => {
-  it ('Should return a promise.', () => {
+  it('Should return a promise.', () => {
     expect(robotsParser.getSitemaps()).to.be.an.instanceOf(Promise);
   });
 
-  it ('Should call the callback.', (done) => {
+  it('Should call the callback.', (done) => {
     expect(robotsParser.getSitemaps(() => done()));
   });
 });

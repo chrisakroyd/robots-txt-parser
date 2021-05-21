@@ -1,7 +1,7 @@
 const chai = require('chai');
 const util = require('../../src/util.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const links = [
   {
@@ -47,4 +47,3 @@ describe('format-link', () => {
     });
   });
 });
-

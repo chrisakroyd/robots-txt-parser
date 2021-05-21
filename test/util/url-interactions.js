@@ -1,6 +1,6 @@
 const chai = require('chai');
-const util = require('../../src/util.js');
 const url = require('fast-url-parser');
+const util = require('../../src/util.js');
 
 const noProtocol = ['bbc.co.uk', 'google.com/robots.txt', 'chaijs.com/api/bdd/', 'www.reddit.com/r/news',
   'example.com/example/example.html'];
@@ -12,16 +12,13 @@ const hasHttpsProtocol = ['https://en.wikipedia.org/wiki/File_Transfer_Protocol'
   'https://letsencrypt.org/getting-started/', 'https://github.com/ChrisAkroyd/robots-txt-parser',
   'https://www.reddit.com/r/news/', 'https://bcc.nl'];
 
-const hasProtocol = [].concat.apply(...[hasHttpProtocol, hasHttpsProtocol, hasNonHttpProtocol]);
-
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('url-interaction', () => {
   describe('has-protocol', () => {
-
     it('Expect links to not have a protocol.', () => {
       noProtocol.forEach((link) => {
-        const protocol = url.parse(link).protocol;
+        const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
     });
@@ -30,23 +27,23 @@ describe('url-interaction', () => {
   describe('has-http-protocol', () => {
     it('Expect all links to have a http protocol.', () => {
       hasHttpsProtocol.forEach((link) => {
-        const protocol = url.parse(link).protocol;
+        const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.true;
       });
 
       hasHttpsProtocol.forEach((link) => {
-        const protocol = url.parse(link).protocol;
+        const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.true;
       });
     });
 
     it('Expect all links to not have http protocol.', () => {
       hasNonHttpProtocol.forEach((link) => {
-        const protocol = url.parse(link).protocol;
+        const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
       noProtocol.forEach((link) => {
-        const protocol = url.parse(link).protocol;
+        const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.false;
       });
     });

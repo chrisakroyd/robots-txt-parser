@@ -35,10 +35,10 @@ function applyRecords(path, records) {
   let numApply = 0;
   let maxSpecificity = 0;
 
-  for (let i = 0; i < records.length; i = i + 1) {
+  for (let i = 0; i < records.length; i += 1) {
     const record = records[i];
     if (record.path.test(path)) {
-      numApply = numApply + 1;
+      numApply += 1;
       if (record.specificity > maxSpecificity) {
         maxSpecificity = record.specificity;
       }
@@ -47,8 +47,8 @@ function applyRecords(path, records) {
 
   return {
     numApply,
-    maxSpecificity
-  }
+    maxSpecificity,
+  };
 }
 
 function isFunction(value) {

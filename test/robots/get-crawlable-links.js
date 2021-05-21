@@ -2,7 +2,7 @@ const chai = require('chai');
 const robots = require('../../src/index.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 const robotsParser = robots();
 
 describe('get-crawlable-links-sync', () => {
@@ -14,11 +14,11 @@ describe('get-crawlable-links-sync', () => {
 });
 
 describe('get-crawlable-links-async', () => {
-  it ('Should return a promise.', () => {
+  it('Should return a promise.', () => {
     expect(robotsParser.getCrawlableLinks(['/test/news', '/test/more-news'])).to.be.an.instanceOf(Promise);
   });
 
-  it ('Should call the callback.', (done) => {
+  it('Should call the callback.', (done) => {
     expect(robotsParser.getCrawlableLinks(['/test/news', '/test/more-news'], () => done()));
   });
 });

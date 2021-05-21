@@ -3,12 +3,12 @@ const robots = require('../../src/index.js');
 const parser = require('../../src/parser.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 const robotsParser = robots();
 
 describe('get-crawl-delay', () => {
   const parsedRobots = parser(exampleRobotsShort);
-  const userAgents = Object.keys(parsedRobots).filter(val => val !== 'sitemaps' && val !== 'host');
+  const userAgents = Object.keys(parsedRobots).filter((val) => val !== 'sitemaps' && val !== 'host');
   robotsParser.parseRobots('http://example.com', exampleRobotsShort);
 
   it('Expect each user agent to have a valid crawl delay.', () => {
@@ -20,11 +20,11 @@ describe('get-crawl-delay', () => {
 });
 
 describe('get-crawl-delay-async', () => {
-  it ('Should return a promise.', () => {
+  it('Should return a promise.', () => {
     expect(robotsParser.getCrawlDelay()).to.be.an.instanceOf(Promise);
   });
 
-  it ('Should call the callback.', (done) => {
+  it('Should call the callback.', (done) => {
     expect(robotsParser.getCrawlDelay(() => done()));
   });
 });

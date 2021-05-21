@@ -113,7 +113,7 @@ Robots.prototype.canCrawlSync = function canFetch(url) {
 Robots.prototype.getSitemaps = function getSitemaps(callback) {
   const sitemaps = this.getSitemapsSync();
   if (util.isFunction(callback)) {
-    callback(sitemaps)
+    callback(sitemaps);
   } else {
     return Promise.resolve(sitemaps);
   }
@@ -127,7 +127,7 @@ Robots.prototype.getSitemapsSync = function getSitemaps() {
 Robots.prototype.getCrawlDelay = function getCrawlDelay(callback) {
   const crawlDelay = this.getCrawlDelaySync();
   if (util.isFunction(callback)) {
-    callback(crawlDelay)
+    callback(crawlDelay);
   } else {
     return Promise.resolve(crawlDelay);
   }
@@ -156,8 +156,8 @@ Robots.prototype.getCrawlableLinksSync = function getCrawlableLinksSync(linkArra
   const crawlableLinks = [];
   const botGroup = this.getRecordsForAgent();
   if (botGroup) {
-    for(let i = 0; i < links.length; i +=1) {
-      if(this.canVisit(links[i], botGroup)) {
+    for (let i = 0; i < links.length; i += 1) {
+      if (this.canVisit(links[i], botGroup)) {
         crawlableLinks.push(links[i]);
       }
     }
@@ -176,7 +176,7 @@ Robots.prototype.getPreferredHost = function getPreferredHost(callback) {
 
 Robots.prototype.getPreferredHostSync = function getPreferredHostSync() {
   const botRecords = this.robotsCache[this.active] || {};
-  return botRecords.host
+  return botRecords.host;
 };
 
 Robots.prototype.setUserAgent = function setUserAgent(agent) {

@@ -25,10 +25,11 @@ const robotsParser = require('robots-txt-parser');
 const robots = robotsParser(
   {
     userAgent: 'Googlebot', // The default user agent to use when looking for allow/disallow rules, if this agent isn't listed in the active robots.txt, we use *.
-    allowOnNeutral: false // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
-  });
+    allowOnNeutral: false, // The value to use when the robots.txt rule's for allow and disallow are balanced on whether a link can be crawled.
+  },
+);
 
-robots.useRobotsFor('http://Example.com')
+robots.useRobotsFor('http://example.com')
   .then(() => {
     robots.canCrawlSync('http://example.com/news'); // Returns true if the link can be crawled, false if not.
     robots.canCrawl('http://example.com/news', (value) => {

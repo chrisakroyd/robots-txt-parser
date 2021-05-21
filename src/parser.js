@@ -88,7 +88,7 @@ function parser(rawString) {
             disallow: [],
             crawlDelay: 0,
           };
-        } else if (recordValue.length === 0) {  // Malformed user-agent, ignore its rules.
+        } else if (recordValue.length === 0) { // Malformed user-agent, ignore its rules.
           agent = '';
         }
         break;

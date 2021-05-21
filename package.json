@@ -1,6 +1,6 @@
 {
   "name": "robots-txt-parser",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A lightweight robots.txt parser for Node.js with support for wildcards, caching and promises.",
   "keywords": [
     "robots",
@@ -41,6 +41,8 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.2",
     "lodash": "^4.17.21",
     "mocha": "^8.3.2",
     "nyc": "^15.1.0"

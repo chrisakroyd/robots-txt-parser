@@ -1,7 +1,7 @@
 const chai = require('chai');
 const robots = require('../../src/index.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 const robotsParser = robots();
 
 describe('fetch', () => {

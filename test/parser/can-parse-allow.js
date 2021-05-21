@@ -2,7 +2,7 @@ const chai = require('chai');
 const allowRobots = require('../test-data/example-robots-txt-allow.js');
 const parse = require('../../src/parser.js');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('all-allow', () => {
   const parseResult = parse(allowRobots);
