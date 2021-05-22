@@ -1,6 +1,7 @@
 # robots-txt-parser
 
 [![Coverage Status](https://coveralls.io/repos/github/chrisakroyd/robots-txt-parser/badge.svg?branch=master)](https://coveralls.io/github/chrisakroyd/robots-txt-parser?branch=master)
+[![npm version](https://badge.fury.io/js/robots-txt-parser.svg)](https://badge.fury.io/js/robots-txt-parser)
 
 A lightweight robots.txt parser for Node.js with support for wildcards, caching and promises.
 
