@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.0.9 - ESLint usage + related cleanup (23/05/2021)
+
+### Changed
+- Fixed Coveralls reporting.
+- Fixed lcov output.
+
 ## 1.0.8 - ESLint usage + related cleanup (21/05/2021)
 
 ### Changed
