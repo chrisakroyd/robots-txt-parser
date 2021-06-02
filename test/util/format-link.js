@@ -46,4 +46,10 @@ describe('format-link', () => {
       expect(util.formatLink(data.string)).to.equal(data.result);
     });
   });
+
+  it('Expect multiple formats to not modify the result.', () => {
+    links.forEach((data) => {
+      expect(util.formatLink(util.formatLink(data.string))).to.equal(data.result);
+    });
+  });
 });

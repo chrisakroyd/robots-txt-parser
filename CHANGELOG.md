@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.0.10 - Testing + cache usage (02/06/2021)
+
+### Changed
+- Fixed lack of cache usage.
+- Additional testing.
+
 ## 1.0.9 - ESLint usage + related cleanup (23/05/2021)
 
 ### Changed

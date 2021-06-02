@@ -1,10 +1,13 @@
 const chai = require('chai');
 const robots = require('../../src/index.js');
 const parser = require('../../src/parser.js');
+const util = require('../../src/util.js');
 const testData = require('../test-data/can-crawl-test-data.js');
+const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
 const { expect } = chai;
 const robotsParser = robots();
+const link = 'https://www.bbc.co.uk';
 
 function getUserAgents(parsedRobots) {
   return Object.keys(parsedRobots).filter((val) => val !== 'sitemaps' && val !== 'host');
@@ -39,6 +42,14 @@ describe('can-crawl-sync ', () => {
         });
       });
     });
+  });
+});
+
+describe('can-crawl-isCached', () => {
+  it('Should use the cached robots.txt and not send a request.', () => {
+    robotsParser.parseRobots(util.formatLink(link), exampleRobotsShort);
+    expect(robotsParser.robotsCache).to.contain.keys([util.formatLink(link)]);
+    robotsParser.canCrawl(link).then((result) => expect(result).to.be.true);
   });
 });
 
