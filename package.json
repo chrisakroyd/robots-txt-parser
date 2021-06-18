@@ -23,7 +23,7 @@
     "test-parser": "mocha test/parser/*.js",
     "test-util": "mocha test/util/*.js",
     "coverage": "nyc --reporter=lcov mocha test/**/*.js",
-    "local-coverage": "nyc mocha  mocha test/**/*.js"
+    "local-coverage": "nyc mocha mocha test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/ChrisAkroyd/robots-txt-parser/issues"
   },
-  "homepage": "https://github.com/ChrisAkroyd/robots-txt-parser#readme",
+  "homepage": "https://github.com/ChrisAkroyd/robots-txt-parser",
   "dependencies": {
     "fast-url-parser": "^1.1.3",
     "is-absolute-url": "^2.1.0",
