@@ -12,25 +12,18 @@ const whitespace = ' ';
 const lineEndings = /[\r\n]+/g;
 const recordSlices = /(\w+-)?\w+:\s\S*/g;
 
-function cleanComments(rawString) {
-  // Replace comments and whitespace
-  return rawString
-    .replace(comments, '');
-}
+// Replace comments and whitespace
+const cleanComments = (rawString) => rawString.replace(comments, '');
 
-function cleanSpaces(rawString) {
-  return rawString.replace(whitespace, '').trim();
-}
+const cleanSpaces = (rawString) => rawString.replace(whitespace, '').trim();
 
-function splitOnLines(string) {
-  return string.split(lineEndings);
-}
+const splitOnLines = (string) => string.split(lineEndings);
 
-function robustSplit(string) {
+const robustSplit = (string) => {
   return !string.includes('<html>') ? [...string.match(recordSlices)].map(cleanSpaces) : [];
-}
+};
 
-function parseRecord(line) {
+const parseRecord = (line) => {
   // Find first colon and assume is the field delimiter.
   const firstColonI = line.indexOf(':');
   return {
@@ -39,9 +32,9 @@ function parseRecord(line) {
     // Values are case sensitive (e.g. urls) and therefore leave alone.
     value: line.slice(firstColonI + 1).trim(),
   };
-}
+};
 
-function parsePattern(pattern) {
+const parsePattern = (pattern) => {
   const regexSpecialChars = /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g;
   const wildCardPattern = /\*/g;
   const EOLPattern = /\\\$$/;
@@ -53,16 +46,15 @@ function parsePattern(pattern) {
     .replace(EOLPattern, '$');
 
   return new RegExp(regexString, flags);
-}
+};
 
-function groupMemberRecord(value) {
-  return {
+const groupMemberRecord = (value) => (
+  {
     specificity: value.length,
     path: parsePattern(value),
-  };
-}
+  });
 
-function parser(rawString) {
+const parser = (rawString) => {
   let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
 
   // Fallback to the record based split method if we find only one line.
@@ -128,6 +120,6 @@ function parser(rawString) {
   // Return only unique sitemaps.
   robotsObj.sitemaps = robotsObj.sitemaps.filter((val, i, s) => s.indexOf(val) === i);
   return robotsObj;
-}
+};
 
 module.exports = parser;

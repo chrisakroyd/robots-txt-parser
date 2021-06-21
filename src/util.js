@@ -1,15 +1,13 @@
 const url = require('fast-url-parser');
 const isAbsolute = require('is-absolute-url');
 
-function hasHttpProtocol(protocol) {
-  return (protocol === 'http:' || protocol === 'https:');
-}
+const hasHttpProtocol = (protocol) => (protocol === 'http:' || protocol === 'https:');
 
-function addProtocol(link) {
-  return `http://${link}`;
-}
+const addProtocol = (link) => `http://${link}`;
 
-function formatLink(rawLink) {
+const isFunction = (value) => typeof value === 'function';
+
+const formatLink = (rawLink) => {
   let link = rawLink;
   // No protocol on the link, this can screw up url parsing with node url
   // so add a protocol and then parse.
@@ -24,14 +22,14 @@ function formatLink(rawLink) {
   }
   // Return the base link.
   return `${parsedLink.protocol}//${parsedLink.hostname}`;
-}
+};
 
 /*
  * Calculates the number of records that apply for the
  * given path and the maximum specificity of all
  * the records which apply.
  */
-function applyRecords(path, records) {
+const applyRecords = (path, records) => {
   let numApply = 0;
   let maxSpecificity = 0;
 
@@ -49,11 +47,7 @@ function applyRecords(path, records) {
     numApply,
     maxSpecificity,
   };
-}
-
-function isFunction(value) {
-  return typeof value === 'function';
-}
+};
 
 module.exports = {
   hasHttpProtocol,
