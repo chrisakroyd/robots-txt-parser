@@ -24,6 +24,10 @@ describe('is-cached', () => {
       expect(robotsParser.isCached(link)).to.be.false;
     });
   });
+
+  it('Expect robots.txt crawl to use cached copy (.useRobotsFor(link))', (done) => {
+    expect(robotsParser.useRobotsFor('http://example.com', done));
+  });
 });
 
 describe('clear-cache', () => {

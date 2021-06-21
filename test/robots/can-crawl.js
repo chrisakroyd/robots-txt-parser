@@ -57,4 +57,13 @@ describe('can-crawl-async', () => {
   it('Should return a promise.', () => {
     expect(robotsParser.canCrawl('test.com')).to.be.an.instanceOf(Promise);
   });
+
+  it('Should call the callback (uncached).', (done) => {
+    expect(robotsParser.canCrawl('http://bbc.co.uk', done));
+  });
+
+  it('Should call the callback (cached).', (done) => {
+    robotsParser.parseRobots('http://example.com', exampleRobotsShort);
+    expect(robotsParser.canCrawl('http://example.com', done));
+  });
 });
