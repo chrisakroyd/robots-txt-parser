@@ -1,6 +1,6 @@
 {
   "name": "robots-txt-parser",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "A lightweight robots.txt parser for Node.js with support for wildcards, caching and promises.",
   "keywords": [
     "robots",
@@ -22,8 +22,8 @@
     "test-robots": "mocha test/robots/*.js",
     "test-parser": "mocha test/parser/*.js",
     "test-util": "mocha test/util/*.js",
-    "coverage": "nyc --reporter=lcov mocha test/**/*.js",
-    "local-coverage": "nyc mocha mocha test/**/*.js"
+    "coverage": "nyc --reporter=lcov mocha test/**/*.js --timeout 10s",
+    "local-coverage": "nyc mocha test/**/*.js"
   },
   "repository": {
     "type": "git",
