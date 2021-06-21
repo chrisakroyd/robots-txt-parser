@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.0.0 - 2.0.0 release (21/06/2021)
+
+### Changed
+- Rewrite of robots.js
+- Additional testing.
+- Fixed bugs with callbacks.
+
+
 ## 1.0.10 - Testing + cache usage (02/06/2021)
 
 ### Changed
