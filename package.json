@@ -1,6 +1,6 @@
 {
   "name": "robots-txt-parser",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A lightweight robots.txt parser for Node.js with support for wildcards, caching and promises.",
   "keywords": [
     "robots",
@@ -55,6 +55,6 @@
     ".eslintrc",
     ".gitignore",
     "src/*.js",
-    "test/*.js"
+    "test/**/*.js"
   ]
 }
