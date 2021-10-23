@@ -1,7 +1,7 @@
 const chai = require('chai');
-const robots = require('../../src/index.js');
-const parser = require('../../src/parser.js');
-const util = require('../../src/util.js');
+const robots = require('../../dist/index.js');
+const parser = require('../../dist/parser.js');
+const util = require('../../dist/util.js');
 const testData = require('../test-data/can-crawl-test-data.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
@@ -10,7 +10,9 @@ const robotsParser = robots();
 const link = 'https://www.bbc.co.uk';
 
 function getUserAgents(parsedRobots) {
-  return Object.keys(parsedRobots).filter((val) => val !== 'sitemaps' && val !== 'host');
+  return Object.keys(parsedRobots).filter(
+    (val) => val !== 'sitemaps' && val !== 'host',
+  );
 }
 
 describe('can-crawl-sync ', () => {

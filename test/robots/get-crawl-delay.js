@@ -1,6 +1,6 @@
 const chai = require('chai');
-const robots = require('../../src/index.js');
-const parser = require('../../src/parser.js');
+const robots = require('../../dist/index.js');
+const parser = require('../../dist/parser.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
 const { expect } = chai;
@@ -8,7 +8,9 @@ const robotsParser = robots();
 
 describe('get-crawl-delay', () => {
   const parsedRobots = parser(exampleRobotsShort);
-  const userAgents = Object.keys(parsedRobots).filter((val) => val !== 'sitemaps' && val !== 'host');
+  const userAgents = Object.keys(parsedRobots).filter(
+    (val) => val !== 'sitemaps' && val !== 'host',
+  );
   robotsParser.parseRobots('http://example.com', exampleRobotsShort);
 
   it('Expect each user agent to have a valid crawl delay.', () => {

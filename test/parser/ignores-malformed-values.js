@@ -1,12 +1,14 @@
 const chai = require('chai');
 const exampleRobotsMalformed = require('../test-data/example-robots-malformed-short.js');
-const parse = require('../../src/parser.js');
+const parse = require('../../dist/parser.js');
 
 const { expect } = chai;
 
 describe('Ignores Malformed Values', () => {
   const parseResult = parse(exampleRobotsMalformed);
-  const userAgents = Object.keys(parseResult).filter((val) => val !== 'sitemaps' && val !== 'host');
+  const userAgents = Object.keys(parseResult).filter(
+    (val) => val !== 'sitemaps' && val !== 'host',
+  );
 
   it('Should have 3 sitemaps.', () => {
     expect(parseResult.sitemaps).to.have.lengthOf(3);
@@ -20,7 +22,11 @@ describe('Ignores Malformed Values', () => {
     userAgents.forEach((userAgent) => {
       const userAgentGroup = parseResult[userAgent];
       expect(userAgentGroup).to.be.an('object');
-      expect(userAgentGroup).to.contain.all.keys(['allow', 'disallow', 'crawlDelay']);
+      expect(userAgentGroup).to.contain.all.keys([
+        'allow',
+        'disallow',
+        'crawlDelay',
+      ]);
     });
   });
 

@@ -1,6 +1,7 @@
-const get = require('./get.js');
-const parser = require('./parser.js');
-const util = require('./util.js');
+import get from './get';
+import parser from './parser';
+import { ParsedRobotsTxt, RobotOptions, RobotsAgent } from './types';
+import * as util from './util';
 
 const DFLT_OPTS = {
   userAgent: '*',
@@ -9,11 +10,20 @@ const DFLT_OPTS = {
 };
 
 class Robots {
-  constructor(opts = {}) {
+  active: string;
+  robotsCache: Record<string, ParsedRobotsTxt>;
+  opts: RobotOptions;
+
+  constructor(opts: Partial<RobotOptions> = {}) {
     this.robotsCache = {};
+    this.active = '';
     this.opts = {
-      userAgent: opts.userAgent ? opts.userAgent.toLowerCase() : DFLT_OPTS.userAgent.toLowerCase(),
-      allowOnNeutral: opts.allowOnNeutral ? opts.allowOnNeutral : DFLT_OPTS.allowOnNeutral,
+      userAgent: opts.userAgent
+        ? opts.userAgent.toLowerCase()
+        : DFLT_OPTS.userAgent.toLowerCase(),
+      allowOnNeutral: opts.allowOnNeutral
+        ? opts.allowOnNeutral
+        : DFLT_OPTS.allowOnNeutral,
       timeout: opts.timeout ? opts.timeout : DFLT_OPTS.timeout,
     };
   }
@@ -31,7 +41,7 @@ class Robots {
     return false;
   }
 
-  canVisit(url, botGroup) {
+  canVisit(url: string, botGroup: RobotsAgent) {
     const allow = util.applyRecords(url, botGroup.allow);
     const disallow = util.applyRecords(url, botGroup.disallow);
     const noAllows = allow.numApply === 0 && disallow.numApply > 0;
@@ -42,41 +52,40 @@ class Robots {
       return true;
     }
 
-    if (noDisallows || (allow.maxSpecificity > disallow.maxSpecificity)) {
+    if (noDisallows || allow.maxSpecificity > disallow.maxSpecificity) {
       return true;
-    } else if (noAllows || (allow.maxSpecificity < disallow.maxSpecificity)) {
+    } else if (noAllows || allow.maxSpecificity < disallow.maxSpecificity) {
       return false;
     }
     return this.opts.allowOnNeutral;
   }
 
-  parseRobots(url, string) {
+  parseRobots(url: string, string: string) {
     const formattedLink = util.formatLink(url);
     this.robotsCache[formattedLink] = parser(string);
     this.active = formattedLink;
   }
 
-  fetch(link) {
+  fetch(link: string) {
     const formattedLink = util.formatLink(link);
     const robotsLink = `${formattedLink}/robots.txt`;
-    return get(robotsLink, this.opts.timeout)
-      .then((data) => {
-        this.robotsCache[formattedLink] = parser(data);
-        this.active = link;
-        return this.robotsCache[formattedLink];
-      });
+    return get(robotsLink, this.opts.timeout).then((data) => {
+      this.robotsCache[formattedLink] = parser(data);
+      this.active = link;
+      return this.robotsCache[formattedLink];
+    });
   }
 
-  isCached(domain) {
+  isCached(domain: string) {
     return util.formatLink(domain) in this.robotsCache;
   }
 
-  useRobotsFor(url, callback) {
+  useRobotsFor(url: string, callback?: () => unknown) {
     const link = util.formatLink(url);
 
     if (this.isCached(link)) {
       this.active = link;
-      if (util.isFunction(callback)) {
+      if (callback && util.isFunction(callback)) {
         return callback();
       }
       return Promise.resolve();
@@ -91,10 +100,10 @@ class Robots {
     return fetch;
   }
 
-  canCrawl(url, callback) {
+  canCrawl(url: string, callback?: (crawlable: boolean) => unknown) {
     if (this.isCached(url)) {
       const crawlable = this.canCrawlSync(url);
-      if (util.isFunction(callback)) {
+      if (util.isFunction(callback) && callback) {
         return callback(crawlable);
       }
       return Promise.resolve(crawlable);
@@ -102,14 +111,14 @@ class Robots {
 
     return this.fetch(url).then(() => {
       const crawlable = this.canCrawlSync(url);
-      if (util.isFunction(callback)) {
+      if (util.isFunction(callback) && callback) {
         return callback(crawlable);
       }
       return crawlable;
     });
   }
 
-  canCrawlSync(url) {
+  canCrawlSync(url: string) {
     // Get the parsed robotsCache.txt for this domain.
     const botGroup = this.getRecordsForAgent();
     // Conditional allow, our bot or the * user agent is in the robotsCache.txt
@@ -120,9 +129,9 @@ class Robots {
     return true;
   }
 
-  getSitemaps(callback) {
+  getSitemaps(callback?: (sitemaps: string[]) => unknown) {
     const sitemaps = this.getSitemapsSync();
-    if (util.isFunction(callback)) {
+    if (util.isFunction(callback) && callback) {
       return callback(sitemaps);
     }
     return Promise.resolve(sitemaps);
@@ -133,9 +142,9 @@ class Robots {
     return botRecords ? botRecords.sitemaps : [];
   }
 
-  getCrawlDelay(callback) {
+  getCrawlDelay(callback?: (crawlDelay: number) => unknown) {
     const crawlDelay = this.getCrawlDelaySync();
-    if (util.isFunction(callback)) {
+    if (util.isFunction(callback) && callback) {
       return callback(crawlDelay);
     }
     return Promise.resolve(crawlDelay);
@@ -146,9 +155,12 @@ class Robots {
     return botRecords ? botRecords.crawlDelay : 0;
   }
 
-  getCrawlableLinks(linkArray, callback) {
+  getCrawlableLinks(
+    linkArray: string[],
+    callback?: (crawlableLinks: string[]) => unknown,
+  ) {
     const crawlableLinks = this.getCrawlableLinksSync(linkArray);
-    if (util.isFunction(callback)) {
+    if (util.isFunction(callback) && callback) {
       return callback(crawlableLinks);
     }
     return Promise.resolve(crawlableLinks);
@@ -158,7 +170,7 @@ class Robots {
    * Takes an array of links and returns an array of links which are crawlable
    * for the given domain.
    */
-  getCrawlableLinksSync(linkArray) {
+  getCrawlableLinksSync(linkArray: string[] | string) {
     const links = linkArray instanceof Array ? linkArray : [linkArray];
     const crawlableLinks = [];
     const botGroup = this.getRecordsForAgent();
@@ -172,9 +184,9 @@ class Robots {
     return crawlableLinks;
   }
 
-  getPreferredHost(callback) {
+  getPreferredHost(callback?: (host?: string) => unknown) {
     const host = this.getPreferredHostSync();
-    if (util.isFunction(callback)) {
+    if (util.isFunction(callback) && callback) {
       callback(host);
     }
     return Promise.resolve(host);
@@ -185,11 +197,11 @@ class Robots {
     return botRecords.host;
   }
 
-  setUserAgent(agent) {
+  setUserAgent(agent: string) {
     this.opts.userAgent = agent.toLowerCase();
   }
 
-  setAllowOnNeutral(allow) {
+  setAllowOnNeutral(allow: boolean) {
     this.opts.allowOnNeutral = allow;
   }
 
@@ -198,4 +210,4 @@ class Robots {
   }
 }
 
-module.exports = Robots;
+export = Robots;

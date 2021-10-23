@@ -1,6 +1,6 @@
 const chai = require('chai');
 const allowRobots = require('../test-data/example-robots-txt-allow.js');
-const parse = require('../../src/parser.js');
+const parse = require('../../dist/parser');
 
 const { expect } = chai;
 
