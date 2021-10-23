@@ -1,12 +1,14 @@
+import { RobotOptions } from './types/options';
+import { ParsedRobotsTxt, RobotsAgent } from './types/parsed';
 declare class Robots {
     active: string;
-    robotsCache: Record<string, Parsed.RobotsTxt>;
+    robotsCache: Record<string, ParsedRobotsTxt>;
     opts: RobotOptions;
     constructor(opts?: Partial<RobotOptions>);
-    getRecordsForAgent(): false | Parsed.Agent;
-    canVisit(url: string, botGroup: Parsed.Agent): boolean;
+    getRecordsForAgent(): false | RobotsAgent;
+    canVisit(url: string, botGroup: RobotsAgent): boolean;
     parseRobots(url: string, string: string): void;
-    fetch(link: string): Promise<Parsed.RobotsTxt>;
+    fetch(link: string): Promise<ParsedRobotsTxt>;
     isCached(domain: string): boolean;
     useRobotsFor(url: string, callback?: () => unknown): unknown;
     canCrawl(url: string, callback?: (crawlable: boolean) => unknown): unknown;

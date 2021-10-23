@@ -1,5 +1,7 @@
 import get from './get';
 import parser from './parser';
+import { RobotOptions } from './types/options';
+import { ParsedRobotsTxt, RobotsAgent } from './types/parsed';
 import * as util from './util';
 
 const DFLT_OPTS = {
@@ -10,7 +12,7 @@ const DFLT_OPTS = {
 
 class Robots {
   active: string;
-  robotsCache: Record<string, Parsed.RobotsTxt>;
+  robotsCache: Record<string, ParsedRobotsTxt>;
   opts: RobotOptions;
 
   constructor(opts: Partial<RobotOptions> = {}) {
@@ -40,7 +42,7 @@ class Robots {
     return false;
   }
 
-  canVisit(url: string, botGroup: Parsed.Agent) {
+  canVisit(url: string, botGroup: RobotsAgent) {
     const allow = util.applyRecords(url, botGroup.allow);
     const disallow = util.applyRecords(url, botGroup.disallow);
     const noAllows = allow.numApply === 0 && disallow.numApply > 0;

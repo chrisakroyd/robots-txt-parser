@@ -1,2 +1,3 @@
-declare const parser: (rawString: string) => Parsed.RobotsTxt;
+import { ParsedRobotsTxt } from './types/parsed';
+declare const parser: (rawString: string) => ParsedRobotsTxt;
 export = parser;

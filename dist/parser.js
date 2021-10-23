@@ -1,4 +1,5 @@
 "use strict";
+// https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
 var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
@@ -8,7 +9,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-// https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
 // Constants for groupings
 var USER_AGENT = 'user-agent';
 var ALLOW = 'allow';

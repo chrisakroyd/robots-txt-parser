@@ -1,4 +1,7 @@
 // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
+
+import { ParsedRobotsTxt } from './types/parsed';
+
 // Constants for groupings
 const USER_AGENT = 'user-agent';
 const ALLOW = 'allow';
@@ -64,9 +67,9 @@ const parser = (rawString: string) => {
     lines = robustSplit(cleanComments(rawString));
   }
 
-  const robotsObj: Parsed.RobotsTxt = {
+  const robotsObj: ParsedRobotsTxt = {
     sitemaps: [],
-  } as unknown as Parsed.RobotsTxt;
+  } as unknown as ParsedRobotsTxt;
   let agent = '';
 
   lines.forEach((line) => {
