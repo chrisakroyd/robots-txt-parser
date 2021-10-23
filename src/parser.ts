@@ -13,17 +13,20 @@ const lineEndings = /[\r\n]+/g;
 const recordSlices = /(\w+-)?\w+:\s\S*/g;
 
 // Replace comments and whitespace
-const cleanComments = (rawString) => rawString.replace(comments, '');
+const cleanComments = (rawString: string) => rawString.replace(comments, '');
 
-const cleanSpaces = (rawString) => rawString.replace(whitespace, '').trim();
+const cleanSpaces = (rawString: string) =>
+  rawString.replace(whitespace, '').trim();
 
-const splitOnLines = (string) => string.split(lineEndings);
+const splitOnLines = (string: string) => string.split(lineEndings);
 
-const robustSplit = (string) => {
-  return !string.includes('<html>') ? [...string.match(recordSlices)].map(cleanSpaces) : [];
+const robustSplit = (string: string) => {
+  return !string.includes('<html>')
+    ? [...(string.match(recordSlices) ?? [])].map(cleanSpaces)
+    : [];
 };
 
-const parseRecord = (line) => {
+const parseRecord = (line: string) => {
   // Find first colon and assume is the field delimiter.
   const firstColonI = line.indexOf(':');
   return {
@@ -34,8 +37,8 @@ const parseRecord = (line) => {
   };
 };
 
-const parsePattern = (pattern) => {
-  const regexSpecialChars = /[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g;
+const parsePattern = (pattern: string) => {
+  const regexSpecialChars = /[-[\]/{}()+?.\\^$|]/g;
   const wildCardPattern = /\*/g;
   const EOLPattern = /\\\$$/;
   const flags = 'm';
@@ -48,13 +51,12 @@ const parsePattern = (pattern) => {
   return new RegExp(regexString, flags);
 };
 
-const groupMemberRecord = (value) => (
-  {
-    specificity: value.length,
-    path: parsePattern(value),
-  });
+const groupMemberRecord = (value: string) => ({
+  specificity: value.length,
+  path: parsePattern(value),
+});
 
-const parser = (rawString) => {
+const parser = (rawString: string) => {
   let lines = splitOnLines(cleanSpaces(cleanComments(rawString)));
 
   // Fallback to the record based split method if we find only one line.
@@ -62,16 +64,17 @@ const parser = (rawString) => {
     lines = robustSplit(cleanComments(rawString));
   }
 
-  const robotsObj = {
+  const robotsObj: Parsed.RobotsTxt = {
     sitemaps: [],
-  };
+  } as unknown as Parsed.RobotsTxt;
   let agent = '';
 
   lines.forEach((line) => {
     const record = parseRecord(line);
+    const recordValue = record.value.toLowerCase();
+
     switch (record.field) {
       case USER_AGENT:
-        const recordValue = record.value.toLowerCase();
         if (recordValue !== agent && recordValue.length > 0) {
           // Bot names are non-case sensitive.
           agent = recordValue;
@@ -80,7 +83,8 @@ const parser = (rawString) => {
             disallow: [],
             crawlDelay: 0,
           };
-        } else if (recordValue.length === 0) { // Malformed user-agent, ignore its rules.
+        } else if (recordValue.length === 0) {
+          // Malformed user-agent, ignore its rules.
           agent = '';
         }
         break;
@@ -108,7 +112,7 @@ const parser = (rawString) => {
         break;
       // Non standard but included for completeness.
       case HOST:
-        if (!('host' in robotsObj)) {
+        if (!robotsObj.host) {
           robotsObj.host = record.value;
         }
         break;
@@ -118,8 +122,10 @@ const parser = (rawString) => {
   });
 
   // Return only unique sitemaps.
-  robotsObj.sitemaps = robotsObj.sitemaps.filter((val, i, s) => s.indexOf(val) === i);
+  robotsObj.sitemaps = robotsObj.sitemaps.filter(
+    (val, i, s) => s.indexOf(val) === i,
+  );
   return robotsObj;
 };
 
-module.exports = parser;
+export = parser;

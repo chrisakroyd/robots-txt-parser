@@ -1,12 +1,21 @@
 const chai = require('chai');
-const robots = require('../../src/index.js');
+const robots = require('../../dist/index.js');
 const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
 
 const { expect } = chai;
 const robotsParser = robots();
 
-const cachedLinks = ['http://example.com', 'http://test.com', 'https://www.bbc.co.uk', 'https://google.co.uk'];
-const nonCachedLinks = ['example-test.com', 'http://test-example.com', 'https://reddit.com'];
+const cachedLinks = [
+  'http://example.com',
+  'http://test.com',
+  'https://www.bbc.co.uk',
+  'https://google.co.uk',
+];
+const nonCachedLinks = [
+  'example-test.com',
+  'http://test-example.com',
+  'https://reddit.com',
+];
 
 describe('is-cached', () => {
   cachedLinks.forEach((link) => {

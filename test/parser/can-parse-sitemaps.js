@@ -1,7 +1,6 @@
 const chai = require('chai');
-const uniq = require('lodash/uniq');
 const sitemaps = require('../test-data/example-robots-txt-sitemaps');
-const parse = require('../../src/parser.js');
+const parse = require('../../dist/parser.js');
 
 const { expect } = chai;
 
@@ -14,13 +13,24 @@ describe('can-parse-sitemaps', () => {
   });
 
   it('Expect the sitemaps list to contain only sitemaps in the robots file.', () => {
-    const sitemapsList = ['http://www.bbc.co.uk/news_sitemap.xml', 'http://www.bbc.co.uk/video_sitemap.xml',
-      'http://www.bbc.co.uk/sitemap.xml', 'http://www.bbc.co.uk/mobile_sitemap.xml'];
+    const sitemapsList = [
+      'http://www.bbc.co.uk/news_sitemap.xml',
+      'http://www.bbc.co.uk/video_sitemap.xml',
+      'http://www.bbc.co.uk/sitemap.xml',
+      'http://www.bbc.co.uk/mobile_sitemap.xml',
+    ];
     expect(parseResult.sitemaps).to.have.same.members(sitemapsList);
   });
 
   it('Sitemaps in the sitemaps list should be unique.', () => {
-    expect(parseResult.sitemaps).to.deep.equal(uniq(parseResult.sitemaps));
+    expect(parseResult.sitemaps).to.deep.equal(
+      Object.keys(
+        (parseResult.sitemaps || []).reduce((a, b) => {
+          a[b] = true;
+          return a;
+        }, {}),
+      ),
+    );
   });
 
   it('Each sitemap should be a string.', () => {
