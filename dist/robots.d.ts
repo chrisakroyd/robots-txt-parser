@@ -1,5 +1,4 @@
-import { RobotOptions } from './types/options';
-import { ParsedRobotsTxt, RobotsAgent } from './types/parsed';
+import { ParsedRobotsTxt, RobotOptions, RobotsAgent } from './types';
 declare class Robots {
     active: string;
     robotsCache: Record<string, ParsedRobotsTxt>;

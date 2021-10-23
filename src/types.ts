@@ -1,3 +1,9 @@
+export type RobotOptions = {
+  userAgent: string;
+  allowOnNeutral: boolean;
+  timeout: number;
+};
+
 interface ParsedRobotsTxtBase {
   sitemaps: string[];
   host?: string;

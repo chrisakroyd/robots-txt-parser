@@ -1,3 +1,3 @@
-import { ParsedRobotsTxt } from './types/parsed';
+import { ParsedRobotsTxt } from './types';
 declare const parser: (rawString: string) => ParsedRobotsTxt;
 export = parser;

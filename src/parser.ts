@@ -1,6 +1,6 @@
 // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt
 
-import { ParsedRobotsTxt } from './types/parsed';
+import { ParsedRobotsTxt } from './types';
 
 // Constants for groupings
 const USER_AGENT = 'user-agent';

@@ -1,7 +1,6 @@
 import get from './get';
 import parser from './parser';
-import { RobotOptions } from './types/options';
-import { ParsedRobotsTxt, RobotsAgent } from './types/parsed';
+import { ParsedRobotsTxt, RobotOptions, RobotsAgent } from './types';
 import * as util from './util';
 
 const DFLT_OPTS = {
