@@ -1,6 +1,6 @@
 {
   "name": "robots-txt-parser",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A lightweight robots.txt parser for Node.js with support for wildcards, caching and promises.",
   "keywords": [
     "robots",
