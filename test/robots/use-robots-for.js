@@ -1,5 +1,5 @@
 const chai = require('chai');
-const robots = require('../../src/index.js');
+const robots = require('../../src/index');
 
 const { expect } = chai;
 const robotsParser = robots();

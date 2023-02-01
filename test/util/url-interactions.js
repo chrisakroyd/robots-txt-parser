@@ -1,6 +1,6 @@
 const chai = require('chai');
 const url = require('fast-url-parser');
-const util = require('../../src/util.js');
+const util = require('../../src/util');
 
 const noProtocol = ['bbc.co.uk', 'google.com/robots.txt', 'chaijs.com/api/bdd/', 'www.reddit.com/r/news',
   'example.com/example/example.html'];
@@ -26,7 +26,7 @@ describe('url-interaction', () => {
 
   describe('has-http-protocol', () => {
     it('Expect all links to have a http protocol.', () => {
-      hasHttpsProtocol.forEach((link) => {
+      hasHttpProtocol.forEach((link) => {
         const { protocol } = url.parse(link);
         expect(util.hasHttpProtocol(protocol)).to.be.true;
       });
