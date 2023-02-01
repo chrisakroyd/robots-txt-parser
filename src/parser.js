@@ -45,7 +45,7 @@ const parsePattern = (pattern) => {
     .replace(wildCardPattern, '.*')
     .replace(EOLPattern, '$');
 
-  return new RegExp(regexString, flags);
+  return new RegExp(`^${regexString}`, flags);
 };
 
 const groupMemberRecord = (value) => (

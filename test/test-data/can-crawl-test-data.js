@@ -60,4 +60,13 @@ module.exports = [{
   testPath: '/fish*.php',
   matches: ['/fish.php', '/fishheads/catfish.php?parameters'],
   nonMatch: ['/Fish.PHP'],
+}, {
+  robots: `
+    User-agent: *
+    Disallow: /rss
+    Allow: /
+  `,
+  testPath: '/rss',
+  matches: ['/home/rssa'],
+  nonMatch: ['/rss'],
 }];
