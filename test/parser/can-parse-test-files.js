@@ -1,10 +1,10 @@
 const chai = require('chai');
-const exampleRobotsBBC = require('../test-data/example-robots-txt-bbc.js');
-const exampleRobotsBcc = require('../test-data/example-robots-txt-bcc.js');
-const exampleRobotsKarwei = require('../test-data/example-robots-txt-karwei.js');
-const exampleRobotsShort = require('../test-data/example-robots-txt-short.js');
-const exampleRobotsZalando = require('../test-data/example-robots-txt-zalando.js');
-const parse = require('../../src/parser.js');
+const exampleRobotsBBC = require('../test-data/example-robots-txt-bbc');
+const exampleRobotsBcc = require('../test-data/example-robots-txt-bcc');
+const exampleRobotsKarwei = require('../test-data/example-robots-txt-karwei');
+const exampleRobotsShort = require('../test-data/example-robots-txt-short');
+const exampleRobotsZalando = require('../test-data/example-robots-txt-zalando');
+const parse = require('../../src/parser');
 
 const { expect } = chai;
 

@@ -18,12 +18,13 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/**/*.js",
+    "test": "npm run lint && mocha test/**/*.js",
     "test-robots": "mocha test/robots/*.js",
     "test-parser": "mocha test/parser/*.js",
     "test-util": "mocha test/util/*.js",
     "coverage": "nyc --reporter=lcov mocha test/**/*.js --timeout 10s",
-    "local-coverage": "nyc mocha test/**/*.js"
+    "local-coverage": "nyc mocha test/**/*.js",
+    "lint": "eslint src test"
   },
   "repository": {
     "type": "git",

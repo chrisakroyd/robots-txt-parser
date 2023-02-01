@@ -1,7 +1,7 @@
 const chai = require('chai');
 const uniq = require('lodash/uniq');
 const sitemaps = require('../test-data/example-robots-txt-sitemaps');
-const parse = require('../../src/parser.js');
+const parse = require('../../src/parser');
 
 const { expect } = chai;
 

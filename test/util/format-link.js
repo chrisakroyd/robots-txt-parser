@@ -1,5 +1,5 @@
 const chai = require('chai');
-const util = require('../../src/util.js');
+const util = require('../../src/util');
 
 const { expect } = chai;
 

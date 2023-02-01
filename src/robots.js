@@ -1,6 +1,6 @@
-const get = require('./get.js');
-const parser = require('./parser.js');
-const util = require('./util.js');
+const get = require('./get');
+const parser = require('./parser');
+const util = require('./util');
 
 const DFLT_OPTS = {
   userAgent: '*',
@@ -25,7 +25,7 @@ class Robots {
     const otherBots = '*' in domainBots;
     if (ourBotInBots) {
       return domainBots[this.opts.userAgent];
-    } else if (otherBots) {
+    } if (otherBots) {
       return domainBots['*'];
     }
     return false;
@@ -44,7 +44,7 @@ class Robots {
 
     if (noDisallows || (allow.maxSpecificity > disallow.maxSpecificity)) {
       return true;
-    } else if (noAllows || (allow.maxSpecificity < disallow.maxSpecificity)) {
+    } if (noAllows || (allow.maxSpecificity < disallow.maxSpecificity)) {
       return false;
     }
     return this.opts.allowOnNeutral;

@@ -19,9 +19,7 @@ const cleanSpaces = (rawString) => rawString.replace(whitespace, '').trim();
 
 const splitOnLines = (string) => string.split(lineEndings);
 
-const robustSplit = (string) => {
-  return !string.includes('<html>') ? [...string.match(recordSlices)].map(cleanSpaces) : [];
-};
+const robustSplit = (string) => (!string.includes('<html>') ? [...string.match(recordSlices)].map(cleanSpaces) : []);
 
 const parseRecord = (line) => {
   // Find first colon and assume is the field delimiter.
@@ -70,7 +68,7 @@ const parser = (rawString) => {
   lines.forEach((line) => {
     const record = parseRecord(line);
     switch (record.field) {
-      case USER_AGENT:
+      case USER_AGENT: {
         const recordValue = record.value.toLowerCase();
         if (recordValue !== agent && recordValue.length > 0) {
           // Bot names are non-case sensitive.
@@ -84,6 +82,7 @@ const parser = (rawString) => {
           agent = '';
         }
         break;
+      }
       // https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
       case ALLOW:
         if (agent.length > 0 && record.value.length > 0) {
