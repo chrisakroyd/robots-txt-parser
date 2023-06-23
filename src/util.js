@@ -21,7 +21,11 @@ const formatLink = (rawLink) => {
     parsedLink.protocol = 'http:';
   }
   // Return the base link.
-  return `${parsedLink.protocol}//${parsedLink.hostname}`;
+  if ([443, 80, null].includes(parsedLink.port)) {
+    return `${parsedLink.protocol}//${parsedLink.hostname}`;
+  }
+
+  return `${parsedLink.protocol}//${parsedLink.hostname}:${parsedLink.port}`;
 };
 
 /*

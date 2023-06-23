@@ -38,6 +38,10 @@ const links = [
     string: 'https://cheese.nl',
     result: 'https://cheese.nl',
   },
+  {
+    string: 'http://localhost:3001',
+    result: 'http://localhost:3001',
+  },
 ];
 
 describe('format-link', () => {
